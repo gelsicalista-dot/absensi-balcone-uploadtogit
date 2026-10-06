@@ -79,7 +79,13 @@ function doPost(e) {
     } else if (action === 'calculateMonthlyKPI') {
       result = calculateMonthlyKPI(payload[0]);
     } else if (action === 'getGlobalAttendanceList') {
-      result = getGlobalAttendanceList(payload[0], payload[1], payload[2], payload[3]);
+      result = getGlobalAttendanceList(payload[0], payload[1], payload[2], payload[3], payload[4]);
+    } else if (action === 'generateAttendancePDFReport') {
+      result = generateAttendancePDFReport(payload[0], payload[1], payload[2]);
+    } else if (action === 'getHODAttendanceList') {
+      result = getHODAttendanceList(payload[0], payload[1], payload[2], payload[3], payload[4]);
+    } else if (action === 'generateHODAttendancePDFReport') {
+      result = generateHODAttendancePDFReport(payload[0], payload[1], payload[2]);
     } else if (action === 'savePengumuman') {
       result = savePengumuman(payload[0], payload[1], payload[2], payload[3], payload[4]);
     } else if (action === 'deletePengumuman') {
@@ -1957,7 +1963,34 @@ function calculateMonthlyKPI(bulanTahun) {
   }
 }
 
-function getGlobalAttendanceList(searchKey, filterDept, page, limit) {
+function matchesDateOrMonth(targetDateStr, filterStr) {
+  if (!filterStr || !targetDateStr) return false;
+  targetDateStr = targetDateStr.toString().trim();
+  filterStr = filterStr.toString().trim();
+  if (targetDateStr === filterStr || targetDateStr.indexOf(filterStr) !== -1) return true;
+
+  // Format YYYY-MM-DD -> DD/MM/YYYY
+  if (/^\d{4}-\d{2}-\d{2}$/.test(filterStr)) {
+    const p = filterStr.split('-');
+    const dmy = p[2] + '/' + p[1] + '/' + p[0];
+    if (targetDateStr.indexOf(dmy) !== -1) return true;
+  }
+  // Format YYYY-MM -> /MM/YYYY
+  if (/^\d{4}-\d{2}$/.test(filterStr)) {
+    const p = filterStr.split('-');
+    const my = '/' + p[1] + '/' + p[0];
+    if (targetDateStr.indexOf(my) !== -1) return true;
+  }
+  // Format DD/MM/YYYY -> YYYY-MM-DD
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(filterStr)) {
+    const p = filterStr.split('/');
+    const ymd = p[2] + '-' + p[1] + '-' + p[0];
+    if (targetDateStr.indexOf(ymd) !== -1) return true;
+  }
+  return false;
+}
+
+function getGlobalAttendanceList(searchKey, filterDept, filterDateMonth, page, limit) {
   try {
     let data = getSheetDataAsObjects(CONFIG.SHEET_ABSENSI) || [];
     const employees = getSheetDataAsObjects(CONFIG.SHEET_KARYAWAN) || [];
@@ -1972,11 +2005,10 @@ function getGlobalAttendanceList(searchKey, filterDept, page, limit) {
       };
     }).reverse();
 
-    if (searchKey) {
-      const key = searchKey.toLowerCase();
+    if (searchKey && searchKey.trim() !== '') {
+      const key = searchKey.toLowerCase().trim();
       data = data.filter(d => 
         (d.nama_karyawan && d.nama_karyawan.toLowerCase().includes(key)) || 
-        (d.tanggal && d.tanggal.includes(key)) || 
         (d.nik && d.nik.toLowerCase().includes(key))
       );
     }
@@ -1985,17 +2017,184 @@ function getGlobalAttendanceList(searchKey, filterDept, page, limit) {
       data = data.filter(d => d.departemen === filterDept);
     }
 
+    if (filterDateMonth && filterDateMonth.trim() !== '') {
+      const dm = filterDateMonth.trim();
+      data = data.filter(d => d.tanggal && matchesDateOrMonth(d.tanggal, dm));
+    }
+
     const totalRecords = data.length;
-    const startIndex = (page - 1) * limit;
-    const paginatedData = data.slice(startIndex, startIndex + limit);
+    const pageNum = parseInt(page) || 1;
+    const limitNum = parseInt(limit) || 15;
+    const startIndex = (pageNum - 1) * limitNum;
+    const paginatedData = data.slice(startIndex, startIndex + limitNum);
 
     return {
       success: true,
       data: paginatedData,
       total: totalRecords,
-      totalPages: Math.ceil(totalRecords / limit),
-      currentPage: page
+      totalPages: Math.ceil(totalRecords / limitNum),
+      currentPage: pageNum
     };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function generateAttendancePDFReport(searchKey, filterDept, filterDateMonth) {
+  try {
+    let data = getSheetDataAsObjects(CONFIG.SHEET_ABSENSI) || [];
+    const employees = getSheetDataAsObjects(CONFIG.SHEET_KARYAWAN) || [];
+    
+    data = data.map(item => {
+      if (!item) return {};
+      const emp = employees.find(e => e && e.nik === item.nik) || {};
+      return {
+        ...item,
+        nama_karyawan: emp.nama || 'N/A',
+        departemen: emp.departemen || '-'
+      };
+    }).reverse();
+
+    if (searchKey && searchKey.trim() !== '') {
+      const key = searchKey.toLowerCase().trim();
+      data = data.filter(d => 
+        (d.nama_karyawan && d.nama_karyawan.toLowerCase().includes(key)) || 
+        (d.nik && d.nik.toLowerCase().includes(key))
+      );
+    }
+
+    if (filterDept && filterDept !== 'ALL') {
+      data = data.filter(d => d.departemen === filterDept);
+    }
+
+    if (filterDateMonth && filterDateMonth.trim() !== '') {
+      const dm = filterDateMonth.trim();
+      data = data.filter(d => d.tanggal && matchesDateOrMonth(d.tanggal, dm));
+    }
+
+    let filterInfo = [];
+    if (filterDept && filterDept !== 'ALL') filterInfo.push('Departemen: ' + filterDept);
+    else filterInfo.push('Departemen: Semua');
+    if (filterDateMonth && filterDateMonth.trim() !== '') filterInfo.push('Periode/Tgl: ' + filterDateMonth);
+    else filterInfo.push('Periode: Semua Tanggal');
+    if (searchKey && searchKey.trim() !== '') filterInfo.push('Pencarian: "' + searchKey + '"');
+
+    let htmlContent = '<div style="font-family:Arial, sans-serif; padding:15px; color:#1e293b;">';
+    htmlContent += '<h2 style="text-align:center; color:#1e1b4b; margin:0 0 5px 0;">THE BALCONE SUITES & RESORT</h2>';
+    htmlContent += '<h4 style="text-align:center; color:#4338ca; margin:0 0 5px 0;">LAPORAN REKAPITULASI RIWAYAT PRESENSI</h4>';
+    htmlContent += '<p style="text-align:center; font-size:11px; color:#64748b; margin:0 0 15px 0;">' + filterInfo.join(' | ') + ' &bull; Total Baris: ' + data.length + '</p>';
+    
+    htmlContent += '<table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse:collapse; font-size:10px; border-color:#cbd5e1;">';
+    htmlContent += '<tr style="background-color:#1e1b4b; color:white; font-size:9.5px; text-transform:uppercase;">' +
+      '<th style="width:25px; text-align:center;">No</th>' +
+      '<th>Tanggal</th>' +
+      '<th>NIK</th>' +
+      '<th>Nama Karyawan</th>' +
+      '<th>Departemen</th>' +
+      '<th style="text-align:center;">Jam Masuk</th>' +
+      '<th style="text-align:center;">Jam Pulang</th>' +
+      '<th style="text-align:center;">Status</th>' +
+      '<th style="text-align:center;">Terlambat</th>' +
+      '</tr>';
+
+    if (data.length === 0) {
+      htmlContent += '<tr><td colspan="9" style="text-align:center; padding:15px; color:#94a3b8;">Tidak ada data riwayat absensi yang sesuai filter.</td></tr>';
+    } else {
+      data.forEach((row, idx) => {
+        const bgRow = (idx % 2 === 1) ? '#f8fafc' : '#ffffff';
+        const statusColor = (row.status === 'Tepat Waktu') ? '#059669' : '#e11d48';
+        htmlContent += '<tr style="background-color:' + bgRow + ';">' +
+          '<td style="text-align:center;">' + (idx + 1) + '</td>' +
+          '<td>' + (row.tanggal || '-') + '</td>' +
+          '<td style="font-weight:bold; color:#312e81;">' + (row.nik || '-') + '</td>' +
+          '<td>' + (row.nama_karyawan || '-') + '</td>' +
+          '<td>' + (row.departemen || '-') + '</td>' +
+          '<td style="text-align:center; font-family:monospace;">' + (row.jam_masuk || '-') + '</td>' +
+          '<td style="text-align:center; font-family:monospace;">' + (row.jam_pulang || '-') + '</td>' +
+          '<td style="text-align:center; font-weight:bold; color:' + statusColor + ';">' + (row.status || '-') + '</td>' +
+          '<td style="text-align:center;">' + (row.keterlambatan_menit ? row.keterlambatan_menit + ' mnt' : '-') + '</td>' +
+          '</tr>';
+      });
+    }
+
+    htmlContent += '</table>';
+    htmlContent += '<p style="text-align:right; font-size:9px; color:#94a3b8; margin-top:20px;">Dicetak otomatis oleh Sistem HR The Balcone Suites & Resort pada ' + (new Date().toLocaleString('id-ID')) + '</p>';
+    htmlContent += '</div>';
+
+    const safeFileTitle = 'Laporan_Absensi_Balcone_' + (filterDateMonth || 'All').replace(/[^a-zA-Z0-9]/g, '_');
+    const blob = Utilities.newBlob(htmlContent, 'text/html', safeFileTitle + '.html');
+    const pdfBlob = blob.getAs('application/pdf');
+    const base64Pdf = Utilities.base64Encode(pdfBlob.getBytes());
+
+    return {
+      success: true,
+      pdfBase64: 'data:application/pdf;base64,' + base64Pdf,
+      fileName: safeFileTitle + '.pdf'
+    };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function getHODAttendanceList(hodNik, searchKey, filterDateMonth, page, limit) {
+  try {
+    const employees = getSheetDataAsObjects(CONFIG.SHEET_KARYAWAN) || [];
+    const hod = employees.find(e => e && e.nik === hodNik);
+    if (!hod) return { success: false, message: 'Data HOD tidak ditemukan.' };
+    const dept = hod.departemen;
+
+    let data = getSheetDataAsObjects(CONFIG.SHEET_ABSENSI) || [];
+    data = data.map(item => {
+      if (!item) return {};
+      const emp = employees.find(e => e && e.nik === item.nik) || {};
+      return {
+        ...item,
+        nama_karyawan: emp.nama || 'N/A',
+        departemen: emp.departemen || '-'
+      };
+    }).reverse();
+
+    // Data isolation: hanya staf di departemen HOD
+    data = data.filter(d => d.departemen === dept);
+
+    if (searchKey && searchKey.trim() !== '') {
+      const key = searchKey.toLowerCase().trim();
+      data = data.filter(d => 
+        (d.nama_karyawan && d.nama_karyawan.toLowerCase().includes(key)) || 
+        (d.nik && d.nik.toLowerCase().includes(key))
+      );
+    }
+
+    if (filterDateMonth && filterDateMonth.trim() !== '') {
+      const dm = filterDateMonth.trim();
+      data = data.filter(d => d.tanggal && matchesDateOrMonth(d.tanggal, dm));
+    }
+
+    const totalRecords = data.length;
+    const pageNum = parseInt(page) || 1;
+    const limitNum = parseInt(limit) || 15;
+    const startIndex = (pageNum - 1) * limitNum;
+    const paginatedData = data.slice(startIndex, startIndex + limitNum);
+
+    return {
+      success: true,
+      data: paginatedData,
+      total: totalRecords,
+      departemen: dept,
+      totalPages: Math.ceil(totalRecords / limitNum),
+      currentPage: pageNum
+    };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function generateHODAttendancePDFReport(hodNik, searchKey, filterDateMonth) {
+  try {
+    const employees = getSheetDataAsObjects(CONFIG.SHEET_KARYAWAN) || [];
+    const hod = employees.find(e => e && e.nik === hodNik);
+    if (!hod) return { success: false, message: 'Data HOD tidak ditemukan.' };
+    return generateAttendancePDFReport(searchKey, hod.departemen, filterDateMonth);
   } catch (err) {
     return { success: false, message: err.toString() };
   }

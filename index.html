@@ -9,7 +9,9 @@
     <!-- Google Fonts: Plus Jakarta Sans & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- External JS CDNs -->
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
@@ -65,20 +67,25 @@
 
     <style>
         /* ==========================================================================
-           ZETTBOT ANTI-AI DESIGN SYSTEM: FRESH & VIBRANT (EMERALD, INDIGO, AMBER)
+           ZETTBOT ANTI-AI DESIGN SYSTEM: HYBRID DESKTOP & MOBILE (ANTIGRAVITY EDITION)
            ========================================================================== */
         :root {
-            --primary: #4F46E5;       /* Royal Indigo */
+            --primary: #4F46E5;
+            /* Royal Indigo */
             --primary-hover: #4338CA;
             --primary-light: #EEF2FF;
-            --emerald: #10B981;       /* Vibrant Emerald */
+            --emerald: #10B981;
+            /* Vibrant Emerald */
             --emerald-hover: #059669;
             --emerald-light: #ECFDF5;
-            --amber: #F59E0B;         /* Warm Amber */
+            --amber: #F59E0B;
+            /* Warm Amber */
             --amber-hover: #D97706;
             --amber-light: #FEF3C7;
-            --rose: #F43F5E;          /* Soft Rose */
-            --bg-body: #F8FAFC;       /* Sejuk Slate 50 */
+            --rose: #F43F5E;
+            /* Soft Rose */
+            --bg-body: #F8FAFC;
+            /* Sejuk Slate 50 */
             --card-bg: #FFFFFF;
             --border-color: #E2E8F0;
         }
@@ -88,6 +95,21 @@
             font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
             color: #0F172A;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Mobile Scaling Compact (~80% Zoom Feel on Mobile) */
+        @media (max-width: 639px) {
+            html {
+                font-size: 85%;
+            }
+            .card-saas {
+                padding: 1.1rem !important;
+                border-radius: 16px !important;
+            }
+            #app {
+                padding: 0.5rem !important;
+            }
         }
 
         /* Zettbos Anti-AI Card Style: Clean, Elevasi Halus, Soft Ambient Shadow */
@@ -101,6 +123,21 @@
 
         .card-saas:hover {
             box-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+        }
+
+        /* Frosted Glass Panels */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         /* Tombol Utama: Royal Indigo */
@@ -146,7 +183,117 @@
             background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%) !important;
             color: #FFFFFF !important;
             border-radius: 14px;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.32);
+        }
+
+        /* Mobile Bottom Nav Styles */
+        .mobile-bottom-nav {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(226, 232, 240, 0.9);
+            box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06);
+        }
+
+        .bottom-nav-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 10px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .bottom-nav-item:active {
+            transform: scale(0.92);
+        }
+
+        .bottom-nav-item.active {
+            color: var(--primary) !important;
+            font-weight: 700;
+        }
+
+        /* Top Pill Nav on Mobile */
+        .emp-pill {
+            padding: 7px 14px;
+            border-radius: 12px;
+            font-size: 11.5px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            background: #FFFFFF;
+            color: #475569;
+        }
+
+        .emp-pill.active {
+            background: var(--primary);
+            color: #FFFFFF;
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+        }
+
+        /* Mobile Hybrid Section Switcher Logic:
+           - Di layar Mobile (<1024px): Hanya seksi aktif yang tampil (kelas .emp-mobile-hidden disembunyikan).
+           - Di layar Desktop (>=1024px): Seluruh seksi TAMPIL SERENTAK secara proporsional. */
+        @media (max-width: 1023px) {
+            .emp-mobile-hidden {
+                display: none !important;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .emp-mobile-hidden {
+                display: block !important;
+            }
+        }
+
+        /* Adaptive Modal Animations (Bottom Sheet on Mobile, Centered Dialog on Desktop) */
+        @media (max-width: 639px) {
+            .animate-sheet {
+                animation: slideUpMobile 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+        }
+
+        @media (min-width: 640px) {
+            .animate-sheet {
+                animation: scaleUpDesktop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+        }
+
+        @keyframes slideUpMobile {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleUpDesktop {
+            from {
+                transform: scale(0.96);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Mobile Drawer Transition */
+        #admin-mobile-drawer {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #admin-mobile-drawer-overlay {
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* QR Code Scanner Video Container */
@@ -164,6 +311,15 @@
         .leaflet-container {
             font-family: inherit;
             border-radius: 16px;
+        }
+
+        /* Hide Scrollbar for Horizontal Touch Swiping */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         /* Custom Scrollbar */
@@ -220,7 +376,10 @@
                 <div class="text-center mb-6">
                     <div
                         class="w-16 h-16 bg-gradient-to-tr from-indigo-600 via-indigo-700 to-emerald-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg shadow-indigo-500/25">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
                     </div>
                     <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">THE BALCONE</h2>
                     <p class="text-xs text-indigo-600 font-bold tracking-widest uppercase mt-0.5">SUITES & RESORT</p>
@@ -229,13 +388,15 @@
 
                 <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">No. Telepon / Username</label>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">No.
+                            Telepon / Username</label>
                         <input type="text" id="login-phone" required
                             class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 text-sm transition"
                             placeholder="Masukkan No. Telp / Username">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Password</label>
+                        <label
+                            class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Password</label>
                         <input type="password" id="login-password" required
                             class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 text-sm transition"
                             placeholder="••••••••">
@@ -243,12 +404,15 @@
                     <button type="submit" id="btn-login"
                         class="w-full py-3 btn-primary text-sm flex items-center justify-center gap-2">
                         <span>Masuk Sistem</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
                     </button>
                 </form>
 
                 <div class="mt-6 text-center pt-4 border-t border-slate-100">
-                    <button onclick="openModalRegister()" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition">
+                    <button onclick="openModalRegister()"
+                        class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition">
                         Karyawan Baru? Daftar Akun Di Sini
                     </button>
                 </div>
@@ -258,319 +422,609 @@
         <!-- 2. KARYAWAN & HOD VIEW -->
         <div id="view-karyawan" class="hidden space-y-6 pb-20 sm:pb-6">
 
-            <!-- Employee Profile Header -->
-            <div
-                class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shadow-2xl border border-indigo-500/20 p-6 sm:p-8 space-y-6">
-                <div
-                    class="absolute -top-24 -right-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none">
-                </div>
-                <div
-                    class="absolute -bottom-24 -left-24 w-72 h-72 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none">
-                </div>
-
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-                    <div class="flex items-center gap-5">
-                        <div class="relative shrink-0">
-                            <img id="emp-avatar" src=""
-                                class="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl object-cover ring-4 ring-white/10 shadow-2xl border-2 border-indigo-400/40"
-                                alt="Foto Profile">
-                            <span
-                                class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-slate-900 rounded-full shadow-md"
-                                title="Sistem Aktif"></span>
-                        </div>
-
-                        <div class="space-y-1.5">
-                            <div class="flex flex-wrap items-center gap-2">
-                                <h1 id="emp-nama"
-                                    class="text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm">
-                                    Nama Karyawan</h1>
-                                <span id="emp-nik-badge"
-                                    class="text-[11px] bg-white/10 backdrop-blur-md text-indigo-200 border border-white/15 font-mono font-bold px-2.5 py-0.5 rounded-lg shadow-inner">NIK-0000</span>
-                                <span id="emp-role-badge"
-                                    class="text-[11px] bg-gradient-to-r from-amber-500 to-amber-600 text-white font-extrabold px-3 py-0.5 rounded-lg shadow-md tracking-wide uppercase hidden">HOD</span>
-                            </div>
-
-                            <p id="emp-dept-role"
-                                class="text-xs sm:text-sm text-indigo-200/90 font-medium flex items-center gap-2">
-                                <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                                <span>Dept • Jabatan</span>
-                            </p>
-
-                            <div class="flex flex-wrap items-center gap-2 pt-1">
-                                <button onclick="openModalEditProfil()"
-                                    class="text-xs bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md font-semibold px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition shadow-sm active:scale-95">
-                                    <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
-                                    Edit Profil & Password
-                                </button>
-                                <button onclick="openModalUserPayslip()"
-                                    class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 backdrop-blur-md font-semibold px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition shadow-sm active:scale-95">
-                                    <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                    Slip Gaji Saya
-                                </button>
-                            </div>
-                        </div>
+            <!-- Mobile Karyawan Top Bar (Hanya tampil di layar ponsel) -->
+            <div class="lg:hidden card-saas p-3.5 flex items-center justify-between border border-slate-200/80 shadow-sm">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-gradient-to-tr from-indigo-600 to-emerald-500 text-white rounded-xl flex items-center justify-center font-bold text-sm shadow-md">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
                     </div>
-
-                    <div class="flex items-center gap-2.5 self-end lg:self-start">
-                        <button onclick="manualRefreshData()"
-                            class="px-4 py-2 text-xs font-semibold text-indigo-100 bg-white/10 hover:bg-white/20 border border-white/15 backdrop-blur-md rounded-xl flex items-center gap-2 transition shadow-sm active:scale-95">
-                            <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                            Refresh
-                        </button>
-                        <button onclick="logout()"
-                            class="px-4 py-2 text-xs font-semibold text-rose-200 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-400/30 backdrop-blur-md rounded-xl flex items-center gap-2 transition shadow-sm active:scale-95">
-                            <svg class="w-3.5 h-3.5 text-rose-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                            Keluar
-                        </button>
+                    <div>
+                        <h4 class="font-extrabold text-xs text-slate-900 tracking-tight">THE BALCONE</h4>
+                        <p class="text-[10px] text-indigo-600 font-semibold tracking-wide">Portal Karyawan & HOD</p>
                     </div>
                 </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 relative z-10 pt-2 border-t border-white/10">
-                    <div
-                        class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 flex items-center justify-between shadow-inner">
-                        <div class="space-y-0.5">
-                            <p class="text-[10px] font-bold uppercase tracking-wider text-emerald-300/80">Kuota Cuti Tahunan</p>
-                            <p id="emp-sisa-cuti" class="text-xs font-bold text-white">Sisa Cuti: - Hari</p>
-                        </div>
-                        <div
-                            class="w-9 h-9 bg-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-300 border border-emerald-400/20">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        </div>
-                    </div>
-
-                    <div
-                        class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 flex items-center justify-between shadow-inner">
-                        <div class="space-y-0.5">
-                            <p class="text-[10px] font-bold uppercase tracking-wider text-amber-300/80">Jadwal Shift Hari Ini</p>
-                            <p id="emp-roster-shift" class="text-xs font-bold text-white">Jadwal Shift: -</p>
-                        </div>
-                        <div
-                            class="w-9 h-9 bg-amber-500/20 rounded-xl flex items-center justify-center text-amber-300 border border-amber-400/20">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </div>
-                    </div>
-
-                    <div
-                        class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 flex items-center justify-between shadow-inner">
-                        <div class="space-y-0.5">
-                            <p class="text-[10px] font-bold uppercase tracking-wider text-indigo-300/80">Status Absensi</p>
-                            <div>
-                                <span id="emp-status-today"
-                                    class="text-xs bg-amber-500/20 text-amber-200 border border-amber-400/30 px-3 py-1 rounded-full font-bold inline-block">Status: Belum Absen</span>
-                            </div>
-                        </div>
-                        <div
-                            class="w-9 h-9 bg-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-300 border border-indigo-400/20">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </div>
-                    </div>
+                <div class="flex items-center gap-1.5">
+                    <button onclick="manualRefreshData()" class="p-2 text-slate-500 hover:text-indigo-600 hover:bg-slate-100 rounded-xl transition active:scale-95" title="Refresh Data">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    </button>
+                    <button onclick="logout()" class="p-2 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-xl transition active:scale-95" title="Keluar">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    </button>
                 </div>
             </div>
 
-            <!-- Panel Khusus Head of Department (HOD) -->
-            <div id="hod-manager-panel"
-                class="hidden card-saas p-6 border-2 border-purple-200 bg-purple-50/30 space-y-6">
-                <div class="flex items-center justify-between border-b border-purple-200 pb-3">
-                    <div class="flex items-center gap-2">
-                        <div
-                            class="w-8 h-8 bg-purple-800 text-white rounded-xl flex items-center justify-center font-bold text-xs">
-                            <i class="fa-solid fa-user-shield"></i>
+            <!-- Desktop Unified Tab Bar (Hanya tampil di layar desktop / PC) -->
+            <div id="emp-desktop-tab-bar" class="hidden lg:flex items-center justify-between card-saas p-2.5 bg-white/95 backdrop-blur-md border border-slate-200 shadow-sm">
+                <div class="flex items-center gap-1.5">
+                    <button onclick="switchEmpTab('home')" id="desk-tab-emp-home" class="px-4 py-2 text-xs font-bold rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/20 transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                        <span>Home</span>
+                    </button>
+                    <button onclick="switchEmpTab('presensi')" id="desk-tab-emp-presensi" class="px-4 py-2 text-xs font-semibold rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/60 transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                        <span>Presensi</span>
+                    </button>
+                    <button onclick="switchEmpTab('roster')" id="desk-tab-emp-roster" class="px-4 py-2 text-xs font-semibold rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/60 transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <span>Roster</span>
+                    </button>
+                    <button onclick="switchEmpTab('cuti')" id="desk-tab-emp-cuti" class="px-4 py-2 text-xs font-semibold rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/60 transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        <span>Cuti & Izin</span>
+                    </button>
+                    <button onclick="switchEmpTab('mading')" id="desk-tab-emp-mading" class="px-4 py-2 text-xs font-semibold rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/60 transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                        <span>Mading</span>
+                    </button>
+                    <button onclick="switchEmpTab('riwayat')" id="desk-tab-emp-riwayat" class="px-4 py-2 text-xs font-semibold rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/60 transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span>Riwayat</span>
+                    </button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="manualRefreshData()" class="px-3 py-1.5 text-xs text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-xl font-semibold flex items-center gap-1.5 transition active:scale-95">
+                        <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        Refresh
+                    </button>
+                    <button onclick="logout()" class="px-3 py-1.5 text-xs text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-xl font-semibold flex items-center gap-1.5 transition active:scale-95">
+                        <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                        Keluar
+                    </button>
+                </div>
+            </div>
+
+            <!-- ================================================================= -->
+            <!-- TAB 1: HOME (Informasi Karyawan, Ringkasan Status & Panel HOD)    -->
+            <!-- ================================================================= -->
+            <div id="tab-emp-home" class="space-y-6">
+                <!-- Employee Profile Header -->
+                <div
+                    class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shadow-2xl border border-indigo-500/20 p-6 sm:p-8 space-y-6">
+                    <div
+                        class="absolute -top-24 -right-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute -bottom-24 -left-24 w-72 h-72 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none">
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+                        <div class="flex items-center gap-5">
+                            <div class="relative shrink-0">
+                                <img id="emp-avatar" src=""
+                                    class="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl object-cover ring-4 ring-white/10 shadow-2xl border-2 border-indigo-400/40"
+                                    alt="Foto Profile">
+                                <span
+                                    class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-slate-900 rounded-full shadow-md"
+                                    title="Sistem Aktif"></span>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <h1 id="emp-nama"
+                                        class="text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-sm">
+                                        Nama Karyawan</h1>
+                                    <span id="emp-nik-badge"
+                                        class="text-[11px] bg-white/10 backdrop-blur-md text-indigo-200 border border-white/15 font-mono font-bold px-2.5 py-0.5 rounded-lg shadow-inner">NIK-0000</span>
+                                    <span id="emp-role-badge"
+                                        class="text-[11px] bg-gradient-to-r from-amber-500 to-amber-600 text-white font-extrabold px-3 py-0.5 rounded-lg shadow-md tracking-wide uppercase hidden">HOD</span>
+                                </div>
+
+                                <p id="emp-dept-role"
+                                    class="text-xs sm:text-sm text-indigo-200/90 font-medium flex items-center gap-2">
+                                    <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                    <span>Dept • Jabatan</span>
+                                </p>
+
+                                <div class="flex flex-wrap items-center gap-2 pt-1">
+                                    <button onclick="openModalEditProfil()"
+                                        class="text-xs bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md font-semibold px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition shadow-sm active:scale-95">
+                                        <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor"
+                                            stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                        </svg>
+                                        Edit Profil & Password
+                                    </button>
+                                    <button onclick="openModalUserPayslip()"
+                                        class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 backdrop-blur-md font-semibold px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition shadow-sm active:scale-95">
+                                        <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor"
+                                            stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        Slip Gaji Saya
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-gray-900 text-sm">Panel Head of Department (HOD)</h3>
-                            <p class="text-[11px] text-gray-500" id="hod-dept-subtitle">Verifikasi Izin & Roster Departemen</p>
+
+                        <div class="hidden lg:flex items-center gap-2.5 self-end lg:self-start">
+                            <button onclick="manualRefreshData()"
+                                class="px-4 py-2 text-xs font-semibold text-indigo-100 bg-white/10 hover:bg-white/20 border border-white/15 backdrop-blur-md rounded-xl flex items-center gap-2 transition shadow-sm active:scale-95">
+                                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                                Refresh
+                            </button>
+                            <button onclick="logout()"
+                                class="px-4 py-2 text-xs font-semibold text-rose-200 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-400/30 backdrop-blur-md rounded-xl flex items-center gap-2 transition shadow-sm active:scale-95">
+                                <svg class="w-3.5 h-3.5 text-rose-300" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                                Keluar
+                            </button>
                         </div>
                     </div>
-                    <span class="text-xs bg-purple-100 text-purple-800 font-bold px-3 py-1 rounded-full">Akses Approval HOD</span>
+
+                    <!-- 3 Kartu Ringkasan Metrik Karyawan -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 relative z-10 pt-2 border-t border-white/10">
+                        <div
+                            class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 flex items-center justify-between shadow-inner">
+                            <div class="space-y-0.5">
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-emerald-300/80">Kuota Cuti
+                                    Tahunan</p>
+                                <p id="emp-sisa-cuti" class="text-xs font-bold text-white">Sisa Cuti: - Hari</p>
+                            </div>
+                            <div
+                                class="w-9 h-9 bg-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-300 border border-emerald-400/20">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 flex items-center justify-between shadow-inner">
+                            <div class="space-y-0.5">
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-amber-300/80">Jadwal Shift
+                                    Hari Ini</p>
+                                <p id="emp-roster-shift" class="text-xs font-bold text-white">Jadwal Shift: -</p>
+                            </div>
+                            <div
+                                class="w-9 h-9 bg-amber-500/20 rounded-xl flex items-center justify-center text-amber-300 border border-amber-400/20">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 flex items-center justify-between shadow-inner">
+                            <div class="space-y-0.5">
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-indigo-300/80">Status Absensi
+                                </p>
+                                <div>
+                                    <span id="emp-status-today"
+                                        class="text-xs bg-amber-500/20 text-amber-200 border border-amber-400/30 px-3 py-1 rounded-full font-bold inline-block">Status:
+                                        Belum Absen</span>
+                                </div>
+                            </div>
+                            <div
+                                class="w-9 h-9 bg-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-300 border border-indigo-400/20">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-white p-4 rounded-2xl border space-y-3">
-                        <h4 class="font-bold text-gray-800 text-xs flex items-center gap-2">
-                            <i class="fa-solid fa-file-signature text-purple-800"></i> Persetujuan Cuti Staf Departemen
-                        </h4>
-                        <div class="overflow-x-auto max-h-48 overflow-y-auto">
-                            <table class="w-full text-[11px] text-left border-collapse">
+                <!-- Quick Action Callout to Presensi -->
+                <div class="card-saas p-5 bg-gradient-to-r from-indigo-50/90 via-purple-50/50 to-emerald-50/70 border border-indigo-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-4 text-center sm:text-left">
+                        <div class="w-12 h-12 bg-gradient-to-tr from-indigo-600 to-emerald-500 text-white rounded-2xl flex items-center justify-center shadow-md shadow-indigo-600/20 shrink-0 mx-auto sm:mx-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-sm text-slate-900">Aksi Cepat Presensi Hari Ini</h4>
+                            <p class="text-xs text-slate-500">Pindai QR Code & validasi GPS lokasi resort untuk absensi masuk atau pulang.</p>
+                        </div>
+                    </div>
+                    <button onclick="switchEmpTab('presensi')" class="w-full sm:w-auto px-5 py-2.5 btn-primary text-xs font-bold flex items-center justify-center gap-2 shrink-0 shadow-md">
+                        <span>Buka Presensi QR & GPS</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                </div>
+
+                <!-- Panel Khusus Head of Department (HOD) -->
+                <div id="hod-manager-panel"
+                    class="hidden card-saas p-6 border-2 border-purple-200 bg-purple-50/30 space-y-6">
+                    <div class="flex items-center justify-between border-b border-purple-200 pb-3">
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="w-8 h-8 bg-purple-800 text-white rounded-xl flex items-center justify-center font-bold text-xs">
+                                <i class="fa-solid fa-user-shield"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 text-sm">Panel Head of Department (HOD)</h3>
+                                <p class="text-[11px] text-gray-500" id="hod-dept-subtitle">Verifikasi Izin & Roster Departemen</p>
+                            </div>
+                        </div>
+                        <span class="text-xs bg-purple-100 text-purple-800 font-bold px-3 py-1 rounded-full">Akses Approval HOD</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-2xl border space-y-3">
+                            <h4 class="font-bold text-gray-800 text-xs flex items-center gap-2">
+                                <i class="fa-solid fa-file-signature text-purple-800"></i> Persetujuan Cuti Staf Departemen
+                            </h4>
+                            <div class="overflow-x-auto max-h-48 overflow-y-auto">
+                                <table class="w-full text-[11px] text-left border-collapse">
+                                    <thead>
+                                        <tr class="bg-purple-50 text-purple-900 uppercase font-bold border-b">
+                                            <th class="p-2">Nama Staf</th>
+                                            <th class="p-2">Jenis</th>
+                                            <th class="p-2">Tanggal</th>
+                                            <th class="p-2 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-hod-pending-izin">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-2xl border space-y-3">
+                            <h4 class="font-bold text-gray-800 text-xs flex items-center gap-2">
+                                <i class="fa-solid fa-users text-purple-800"></i> Anggota Staf Departemen
+                            </h4>
+                            <div id="hod-staff-list" class="max-h-48 overflow-y-auto space-y-2 text-xs">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-xs flex items-center gap-2">
+                                    <i class="fa-solid fa-calendar-days text-purple-800"></i> Kelola Roster Shift Staf Departemen (Cut-off 26 - 25)
+                                </h4>
+                                <p class="text-[10px] text-gray-500">Kolom Kuning = Sabtu, Kolom Merah = Minggu/Tgl Merah/PH</p>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <input type="month" id="hod-roster-month-picker" onchange="fetchHODRosterData()"
+                                    class="p-1.5 border rounded-xl text-xs bg-gray-50 font-semibold">
+                                <button onclick="downloadHODExcelTemplate()"
+                                    class="px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-bold rounded-xl text-xs flex items-center gap-1.5">
+                                    <i class="fa-solid fa-file-excel"></i> Export Excel
+                                </button>
+                                <label
+                                    class="bg-purple-800 hover:bg-purple-900 text-white px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+                                    <i class="fa-solid fa-file-import"></i> Upload Excel
+                                    <input type="file" id="hod-roster-excel-file" accept=".xlsx, .xls"
+                                        onchange="handleHODRosterExcelUpload(event)" class="hidden">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto border rounded-xl">
+                            <table class="w-full text-xs text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-purple-50 text-purple-900 uppercase font-bold border-b">
-                                        <th class="p-2">Nama Staf</th>
-                                        <th class="p-2">Jenis</th>
-                                        <th class="p-2">Tanggal</th>
-                                        <th class="p-2 text-center">Aksi</th>
+                                    <tr id="hod-roster-table-header-row"
+                                        class="bg-purple-900 text-white font-bold text-[11px]">
+                                        <th class="p-2.5 sticky left-0 bg-purple-900 z-10 min-w-[140px]">NIK & Nama Staf
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody id="table-hod-pending-izin">
+                                <tbody id="table-hod-roster-matrix">
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <div class="bg-white p-4 rounded-2xl border space-y-3">
-                        <h4 class="font-bold text-gray-800 text-xs flex items-center gap-2">
-                            <i class="fa-solid fa-users text-purple-800"></i> Anggota Staf Departemen
-                        </h4>
-                        <div id="hod-staff-list" class="max-h-48 overflow-y-auto space-y-2 text-xs">
+                    <!-- Sub-Modul: Riwayat Kehadiran Staf Departemen (Khusus HOD) -->
+                    <div class="bg-white p-5 rounded-2xl border space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-xs flex items-center gap-2">
+                                    <i class="fa-solid fa-clock-rotate-left text-purple-800"></i> Riwayat Kehadiran Staf Departemen
+                                </h4>
+                                <p class="text-[10px] text-gray-500">Log kehadiran masuk, pulang, dan status kedisiplinan seluruh staf departemen Anda.</p>
+                            </div>
+                            <button onclick="downloadHODAttendancePDFReport()"
+                                class="px-3.5 py-1.5 bg-purple-50 text-purple-800 hover:bg-purple-100 font-bold rounded-xl text-xs flex items-center gap-1.5 border border-purple-200 transition active:scale-95">
+                                <i class="fa-solid fa-file-pdf text-purple-700"></i> Export PDF Absensi Departemen
+                            </button>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <div class="flex-1 min-w-[160px]">
+                                <input type="text" id="search-hod-attendance" placeholder="Cari NIK / Nama Staf..."
+                                    onkeyup="fetchHODAttendanceList(1)"
+                                    class="w-full px-3 py-1.5 border rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-purple-800 bg-slate-50/50">
+                            </div>
+                            <div class="w-full sm:w-40">
+                                <input type="date" id="filter-date-hod-attendance" onchange="fetchHODAttendanceList(1)"
+                                    class="w-full px-3 py-1.5 border rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-purple-800 bg-slate-50/50 text-slate-700 font-semibold" title="Filter Tanggal">
+                            </div>
+                            <button onclick="resetHODAttendanceFilter()"
+                                class="px-3 py-1.5 text-xs text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-xl font-semibold transition">
+                                Reset
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto border rounded-xl">
+                            <table class="w-full text-xs text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-purple-900 text-white font-bold text-[11px]">
+                                        <th class="p-2.5">Tanggal</th>
+                                        <th class="p-2.5">NIK & Nama Staf</th>
+                                        <th class="p-2.5 text-center">Jam Masuk</th>
+                                        <th class="p-2.5 text-center">Jam Pulang</th>
+                                        <th class="p-2.5 text-center">Status</th>
+                                        <th class="p-2.5 text-center">Terlambat</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-hod-attendance-matrix">
+                                    <tr><td colspan="6" class="p-4 text-center text-gray-400">Memuat riwayat kehadiran departemen...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="pagination-hod-attendance" class="flex items-center justify-between pt-2 text-xs text-slate-500">
+                            <span id="label-page-hod-attendance">Menampilkan data...</span>
+                            <div class="flex items-center gap-2">
+                                <button onclick="changeHODAttendancePage(-1)" id="btn-prev-hod-absensi" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg font-bold disabled:opacity-40">&larr; Prev</button>
+                                <span id="current-page-hod-absensi" class="font-bold text-purple-900 font-mono">1</span>
+                                <button onclick="changeHODAttendancePage(1)" id="btn-next-hod-absensi" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg font-bold disabled:opacity-40">Next &rarr;</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="bg-white p-5 rounded-2xl border space-y-4">
-                    <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
+            <!-- ================================================================= -->
+            <!-- TAB 2: PRESENSI QR & GPS (Tab Mandiri)                            -->
+            <!-- ================================================================= -->
+            <div id="tab-emp-presensi" class="hidden space-y-6">
+                <div class="card-saas p-6 sm:p-8 text-center max-w-xl mx-auto space-y-6">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-tr from-emerald-50 to-indigo-50 text-indigo-600 rounded-3xl border border-indigo-100 flex items-center justify-center mx-auto shadow-sm">
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                        </svg>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h3 class="font-extrabold text-slate-900 text-lg sm:text-xl">Presensi QR Code & GPS Geofence</h3>
+                        <p class="text-xs text-slate-500 max-w-md mx-auto">Pastikan Anda berada di area radius lokasi The Balcone Suites & Resort dan kamera aktif saat memindai kode QR resmi.</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-center gap-3.5 pt-2">
+                        <button onclick="openQRScanner('MASUK')"
+                            class="w-full sm:w-auto px-6 py-3.5 btn-emerald text-sm flex items-center justify-center gap-2.5 shadow-lg active:scale-95">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span>Absen Masuk</span>
+                        </button>
+                        <button onclick="openQRScanner('PULANG')"
+                            class="w-full sm:w-auto px-6 py-3.5 btn-primary text-sm flex items-center justify-center gap-2.5 shadow-lg active:scale-95">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                            <span>Absen Pulang</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================================================================= -->
+            <!-- TAB 3: ROSTER SHIFT (Tab Mandiri)                                -->
+            <!-- ================================================================= -->
+            <div id="tab-emp-roster" class="hidden space-y-6">
+                <div class="card-saas p-6 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                         <div>
-                            <h4 class="font-bold text-gray-800 text-xs flex items-center gap-2">
-                                <i class="fa-solid fa-calendar-days text-purple-800"></i> Kelola Roster Shift Staf Departemen (Cut-off 26 - 25)
-                            </h4>
-                            <p class="text-[10px] text-gray-500">Kolom Kuning = Sabtu, Kolom Merah = Minggu/Tgl Merah/PH</p>
+                            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Jadwal Roster Saya (Read-Only)
+                            </h3>
+                            <p class="text-[11px] text-slate-500" id="emp-roster-period-subtitle">Siklus Periode Cut-off Roster Shift Kerja</p>
                         </div>
-                        <div class="flex flex-wrap items-center gap-2">
-                            <input type="month" id="hod-roster-month-picker" onchange="fetchHODRosterData()"
-                                class="p-1.5 border rounded-xl text-xs bg-gray-50 font-semibold">
-                            <button onclick="downloadHODExcelTemplate()"
-                                class="px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-bold rounded-xl text-xs flex items-center gap-1.5">
-                                <i class="fa-solid fa-file-excel"></i> Export Excel
+                        <div class="flex items-center gap-1.5 bg-slate-50 p-1 rounded-xl border border-slate-200">
+                            <button onclick="changeEmpRosterCycle(-1)"
+                                class="px-2.5 py-1 text-[11px] bg-white hover:bg-slate-100 text-slate-700 font-bold rounded-lg border shadow-sm flex items-center gap-1 transition active:scale-95">
+                                <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                                </svg>
+                                Sebelumnya
                             </button>
-                            <label
-                                class="bg-purple-800 hover:bg-purple-900 text-white px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
-                                <i class="fa-solid fa-file-import"></i> Upload Excel
-                                <input type="file" id="hod-roster-excel-file" accept=".xlsx, .xls"
-                                    onchange="handleHODRosterExcelUpload(event)" class="hidden">
-                            </label>
+                            <span id="emp-roster-month-label"
+                                class="px-2 text-xs font-extrabold text-indigo-900 font-mono"></span>
+                            <button onclick="changeEmpRosterCycle(1)"
+                                class="px-2.5 py-1 text-[11px] bg-white hover:bg-slate-100 text-slate-700 font-bold rounded-lg border shadow-sm flex items-center gap-1 transition active:scale-95">
+                                Selanjutnya
+                                <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
 
-                    <div class="overflow-x-auto border rounded-xl">
+                    <div class="overflow-x-auto border border-slate-200 rounded-2xl max-h-96 overflow-y-auto">
                         <table class="w-full text-xs text-left border-collapse">
                             <thead>
-                                <tr id="hod-roster-table-header-row"
-                                    class="bg-purple-900 text-white font-bold text-[11px]">
-                                    <th class="p-2.5 sticky left-0 bg-purple-900 z-10 min-w-[140px]">NIK & Nama Staf</th>
+                                <tr class="bg-indigo-900 text-white font-bold text-[11px] sticky top-0 z-10">
+                                    <th class="p-3">Hari & Tanggal</th>
+                                    <th class="p-3">Shift Kerja</th>
+                                    <th class="p-3">Jam Kerja</th>
+                                    <th class="p-3 text-center">Status Shift</th>
                                 </tr>
                             </thead>
-                            <tbody id="table-hod-roster-matrix">
+                            <tbody id="table-personal-roster">
+                                <tr>
+                                    <td colspan="4" class="p-4 text-center text-gray-400">Memuat jadwal roster...</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="card-saas p-6 text-center">
-                    <div
-                        class="w-14 h-14 bg-gradient-to-tr from-emerald-50 to-indigo-50 text-indigo-600 rounded-2xl border border-indigo-100 flex items-center justify-center mx-auto mb-3 shadow-sm">
-                        <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
-                    </div>
-                    <h3 class="font-bold text-slate-900 mb-1 text-base">Presensi QR & GPS</h3>
-                    <p class="text-xs text-slate-500 mb-5">Pindai QR Code resmi di area lokasi The Balcone Suites & Resort.</p>
-
-                    <div class="flex justify-center gap-3">
-                        <button onclick="openQRScanner('MASUK')"
-                            class="px-5 py-3 btn-emerald text-xs flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            Absen Masuk
-                        </button>
-                        <button onclick="openQRScanner('PULANG')"
-                            class="px-5 py-3 btn-primary text-xs flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                            Absen Pulang
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card-saas p-6 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                                Pengajuan Izin / Cuti
+            <!-- ================================================================= -->
+            <!-- TAB 4: CUTI & IZIN (Tab Mandiri)                                  -->
+            <!-- ================================================================= -->
+            <div id="tab-emp-cuti" class="hidden space-y-6">
+                <div class="card-saas p-6 space-y-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                                Pengajuan Izin & Cuti Karyawan
                             </h3>
-                            <button onclick="openModalIzin()"
-                                class="text-xs bg-indigo-50 text-indigo-700 font-bold px-3 py-1.5 rounded-xl hover:bg-indigo-100 transition active:scale-95">+
-                                Buat Pengajuan</button>
+                            <p class="text-xs text-slate-500">Ajukan cuti tahunan, sakit, izin khusus, extra off, atau public holiday dengan persetujuan berjenjang HOD & HRD.</p>
                         </div>
-                        <p class="text-xs text-slate-500 mb-4">Ajukan izin, cuti tahunan, public holiday, extra off, atau sakit dengan persetujuan berjenjang (HOD & HRD).</p>
+                        <button onclick="openModalIzin()"
+                            class="px-4 py-2.5 btn-primary text-xs font-bold flex items-center gap-2 shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                            <span>Buat Pengajuan Baru</span>
+                        </button>
                     </div>
 
-                    <div class="border-t border-slate-100 pt-3 space-y-2">
-                        <h4 class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Riwayat Pengajuan Saya</h4>
-                        <div id="leave-history-list" class="max-h-36 overflow-y-auto space-y-2">
+                    <div class="space-y-3">
+                        <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Riwayat Pengajuan Saya</h4>
+                        <div id="leave-history-list" class="max-h-80 overflow-y-auto space-y-2.5">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Card Jadwal Roster Shift Karyawan (Read-Only) -->
-            <div class="card-saas p-6 space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                            <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            Jadwal Roster Saya (Read-Only)
+            <!-- ================================================================= -->
+            <!-- TAB 5: MADING DIGITAL (Tab Mandiri)                               -->
+            <!-- ================================================================= -->
+            <div id="tab-emp-mading" class="hidden space-y-6">
+                <div class="card-saas p-6 space-y-4">
+                    <div class="flex items-center justify-between border-b pb-3">
+                        <h3 class="font-bold text-gray-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-newspaper text-indigo-600"></i> Mading Digital Resort
                         </h3>
-                        <p class="text-[11px] text-slate-500" id="emp-roster-period-subtitle">Siklus Periode Cut-off Roster Shift Kerja</p>
+                        <span class="text-[11px] text-gray-400 font-medium">Klik pengumuman untuk membaca detail & unduh foto</span>
                     </div>
-                    <div class="flex items-center gap-1.5 bg-slate-50 p-1 rounded-xl border border-slate-200">
-                        <button onclick="changeEmpRosterCycle(-1)"
-                            class="px-2.5 py-1 text-[11px] bg-white hover:bg-slate-100 text-slate-700 font-bold rounded-lg border shadow-sm flex items-center gap-1 transition active:scale-95">
-                            <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                            Sebelumnya
-                        </button>
-                        <span id="emp-roster-month-label"
-                            class="px-2 text-xs font-extrabold text-indigo-900 font-mono"></span>
-                        <button onclick="changeEmpRosterCycle(1)"
-                            class="px-2.5 py-1 text-[11px] bg-white hover:bg-slate-100 text-slate-700 font-bold rounded-lg border shadow-sm flex items-center gap-1 transition active:scale-95">
-                            Selanjutnya
-                            <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                        </button>
+                    <div id="mading-feed-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     </div>
-                </div>
-
-                <div class="overflow-x-auto border border-slate-200 rounded-2xl max-h-72 overflow-y-auto">
-                    <table class="w-full text-xs text-left border-collapse">
-                        <thead>
-                            <tr class="bg-indigo-900 text-white font-bold text-[11px] sticky top-0 z-10">
-                                <th class="p-3">Hari & Tanggal</th>
-                                <th class="p-3">Shift Kerja</th>
-                                <th class="p-3">Jam Kerja</th>
-                                <th class="p-3 text-center">Status Shift</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-personal-roster">
-                            <tr>
-                                <td colspan="4" class="p-4 text-center text-gray-400">Memuat jadwal roster...</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
-            <div class="card-saas p-6 space-y-4">
-                <div class="flex items-center justify-between border-b pb-3">
+            <!-- ================================================================= -->
+            <!-- TAB 6: RIWAYAT KEHADIRAN PRIBADI (Tab Mandiri)                    -->
+            <!-- ================================================================= -->
+            <div id="tab-emp-riwayat" class="hidden space-y-6">
+                <div class="card-saas p-6 space-y-4">
                     <h3 class="font-bold text-gray-800 text-sm flex items-center gap-2">
-                        <i class="fa-solid fa-newspaper text-blue-800"></i> Mading Digital Resort
+                        <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i> Riwayat Kehadiran Pribadi
                     </h3>
-                    <span class="text-[11px] text-gray-400 font-medium">Klik pengumuman untuk membaca detail & unduh foto</span>
-                </div>
-                <div id="mading-feed-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div id="personal-history-list" class="space-y-3">
+                    </div>
                 </div>
             </div>
 
-            <div class="card-saas p-6">
-                <h3 class="font-bold text-gray-800 mb-4 text-sm"><i class="fa-solid fa-clock-rotate-left text-blue-800 mr-2"></i>Riwayat Kehadiran Pribadi</h3>
-                <div id="personal-history-list" class="space-y-3">
-                </div>
-            </div>
+            <!-- Mobile Floating Bottom Navigation Bar untuk Karyawan (6 Menu Ramah Jempol) -->
+            <nav id="emp-mobile-bottom-nav" class="mobile-bottom-nav lg:hidden fixed bottom-0 left-0 right-0 z-40 px-1 py-1 flex justify-around items-center">
+                <button onclick="switchEmpTab('home')" id="mob-nav-emp-home" class="bottom-nav-item active text-indigo-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    <span class="text-[9.5px] mt-0.5">Home</span>
+                </button>
+                <button onclick="switchEmpTab('presensi')" id="mob-nav-emp-presensi" class="bottom-nav-item text-slate-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                    <span class="text-[9.5px] mt-0.5">Presensi</span>
+                </button>
+                <button onclick="switchEmpTab('roster')" id="mob-nav-emp-roster" class="bottom-nav-item text-slate-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span class="text-[9.5px] mt-0.5">Roster</span>
+                </button>
+                <button onclick="switchEmpTab('cuti')" id="mob-nav-emp-cuti" class="bottom-nav-item text-slate-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                    <span class="text-[9.5px] mt-0.5">Cuti</span>
+                </button>
+                <button onclick="switchEmpTab('mading')" id="mob-nav-emp-mading" class="bottom-nav-item text-slate-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                    <span class="text-[9.5px] mt-0.5">Mading</span>
+                </button>
+                <button onclick="switchEmpTab('riwayat')" id="mob-nav-emp-riwayat" class="bottom-nav-item text-slate-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="text-[9.5px] mt-0.5">Riwayat</span>
+                </button>
+            </nav>
         </div>
 
         <!-- 3. ADMIN HR VIEW -->
         <div id="view-admin" class="hidden grid grid-cols-1 lg:grid-cols-5 gap-6">
 
-            <!-- Admin Sidebar Navigation -->
-            <div class="lg:col-span-1 card-saas p-5 flex flex-col justify-between h-fit space-y-6">
+            <!-- Mobile Admin Top Bar (Hanya tampil di layar ponsel) -->
+            <div class="lg:hidden col-span-1 card-saas p-4 flex items-center justify-between border border-slate-200/80 shadow-md">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-indigo-600 via-indigo-700 to-emerald-500 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md shadow-indigo-500/25">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-xs text-slate-900 tracking-tight">THE BALCONE</h3>
+                        <p class="text-[10px] text-indigo-600 font-bold">HRD & Payroll Portal</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="manualRefreshData()" class="p-2 text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition" title="Refresh Data">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    </button>
+                    <button onclick="toggleAdminMobileDrawer(true)" class="p-2 text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition flex items-center gap-1.5" title="Menu Navigasi">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Desktop Sidebar Navigation (Hidden on mobile) -->
+            <div class="hidden lg:flex lg:col-span-1 card-saas p-5 flex-col justify-between h-fit space-y-6 sticky top-6">
                 <div>
                     <div class="flex items-center gap-3 mb-6 px-2">
                         <div
                             class="w-10 h-10 bg-gradient-to-tr from-indigo-600 via-indigo-700 to-emerald-500 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md shadow-indigo-500/25">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
                         </div>
                         <div>
                             <h3 class="font-bold text-xs text-slate-900 tracking-tight">THE BALCONE</h3>
@@ -581,26 +1035,47 @@
                     <nav class="space-y-1">
                         <button onclick="switchAdminTab('dashboard')" id="nav-dashboard"
                             class="w-full text-left px-4 py-3 text-xs font-semibold text-slate-600 flex items-center gap-3 nav-pill-active transition">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                            </svg>
                             Dashboard Analytics
                         </button>
                         <button onclick="openPayrollGatekeeper()" id="nav-payroll"
                             class="w-full text-left px-4 py-3 text-xs font-bold text-emerald-800 bg-emerald-50/80 border border-emerald-200/80 rounded-xl flex items-center justify-between hover:bg-emerald-100/80 transition">
                             <span class="flex items-center gap-3">
-                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
                                 Payroll & Slip Gaji
                             </span>
-                            <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
                         </button>
                         <button onclick="switchAdminTab('roster')" id="nav-roster"
                             class="w-full text-left px-4 py-3 text-xs font-semibold text-slate-600 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
-                            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
                             Roster Shift (Cut-Off 26-25)
                         </button>
                         <button onclick="switchAdminTab('approval-karyawan')" id="nav-approval-karyawan"
                             class="w-full text-left px-4 py-3 text-xs font-semibold text-slate-600 hover:bg-slate-50 rounded-xl flex items-center justify-between transition">
                             <span class="flex items-center gap-3">
-                                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
                                 Verifikasi Karyawan
                             </span>
                             <span id="badge-pending-emp"
@@ -608,27 +1083,49 @@
                         </button>
                         <button onclick="switchAdminTab('shift-dept')" id="nav-shift-dept"
                             class="w-full text-left px-4 py-3 text-xs font-semibold text-slate-600 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
-                            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                            </svg>
                             Kelola Shift & Dept
                         </button>
                         <button onclick="switchAdminTab('mading')" id="nav-mading"
                             class="w-full text-left px-4 py-3 text-xs font-semibold text-slate-600 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
-                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                            </svg>
                             Mading Digital
                         </button>
                         <button onclick="switchAdminTab('global-absensi')" id="nav-global-absensi"
                             class="w-full text-left px-4 py-3 text-xs font-semibold text-slate-600 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
-                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                            </svg>
                             Riwayat Absensi
                         </button>
                         <button onclick="switchAdminTab('kpi')" id="nav-kpi"
                             class="w-full text-left px-4 py-3 text-xs font-semibold text-slate-600 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
-                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
                             Penilaian KPI
                         </button>
                         <button onclick="switchAdminTab('settings')" id="nav-settings"
                             class="w-full text-left px-4 py-3 text-xs font-semibold text-slate-600 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
-                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
                             Settings & Cetak QR
                         </button>
                     </nav>
@@ -637,18 +1134,26 @@
                 <div class="space-y-2 pt-4 border-t border-slate-100">
                     <button onclick="manualRefreshData()"
                         class="w-full py-2.5 text-xs text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-xl font-bold flex items-center justify-center gap-2 transition active:scale-95">
-                        <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
                         Refresh Data
                     </button>
                     <button onclick="logout()"
                         class="w-full py-2.5 text-xs text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-xl font-bold flex items-center justify-center gap-2 transition active:scale-95">
-                        <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                        <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
                         Logout Admin
                     </button>
                 </div>
             </div>
 
-            <div class="lg:col-span-4 space-y-6">
+            <div class="col-span-1 lg:col-span-4 space-y-6 pb-20 lg:pb-6">
 
                 <!-- Tab 1: Dashboard Analytics -->
                 <div id="tab-admin-dashboard" class="space-y-6">
@@ -658,22 +1163,26 @@
                             <h2 id="stat-total-emp" class="text-2xl font-black text-slate-900 mt-1">0</h2>
                         </div>
                         <div class="card-saas p-5 border-l-4 border-l-emerald-500 bg-emerald-50/20">
-                            <p class="text-[11px] text-emerald-700 font-bold uppercase tracking-wider">Hadir Hari Ini</p>
+                            <p class="text-[11px] text-emerald-700 font-bold uppercase tracking-wider">Hadir Hari Ini
+                            </p>
                             <h2 id="stat-hadir-today" class="text-2xl font-black text-emerald-600 mt-1">0</h2>
                         </div>
                         <div class="card-saas p-5 border-l-4 border-l-rose-500 bg-rose-50/20">
-                            <p class="text-[11px] text-rose-700 font-bold uppercase tracking-wider">Terlambat Hari Ini</p>
+                            <p class="text-[11px] text-rose-700 font-bold uppercase tracking-wider">Terlambat Hari Ini
+                            </p>
                             <h2 id="stat-late-today" class="text-2xl font-black text-rose-500 mt-1">0</h2>
                         </div>
                         <div class="card-saas p-5 border-l-4 border-l-amber-500 bg-amber-50/20">
-                            <p class="text-[11px] text-amber-700 font-bold uppercase tracking-wider">Pending Cuti HRD</p>
+                            <p class="text-[11px] text-amber-700 font-bold uppercase tracking-wider">Pending Cuti HRD
+                            </p>
                             <h2 id="stat-pending-izin" class="text-2xl font-black text-amber-500 mt-1">0</h2>
                         </div>
                     </div>
 
                     <div class="card-saas p-6 space-y-3">
                         <h3 class="font-bold text-gray-800 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-user-pen text-blue-800"></i> Persetujuan Pengajuan Edit Profil & Password
+                            <i class="fa-solid fa-user-pen text-blue-800"></i> Persetujuan Pengajuan Edit Profil &
+                            Password
                         </h3>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs text-left border-collapse">
@@ -697,7 +1206,8 @@
 
                     <div class="card-saas p-6 space-y-3">
                         <h3 class="font-bold text-gray-800 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-file-signature text-blue-800"></i> Persetujuan Final HRD (Cuti / Izin Pending)
+                            <i class="fa-solid fa-file-signature text-blue-800"></i> Persetujuan Final HRD (Cuti / Izin
+                            Pending)
                         </h3>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs text-left border-collapse">
@@ -720,7 +1230,8 @@
 
                     <div class="card-saas p-6 space-y-3">
                         <h3 class="font-bold text-gray-800 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-clock-rotate-left text-blue-800"></i> Riwayat Seluruh Pengajuan Izin & Cuti Resort
+                            <i class="fa-solid fa-clock-rotate-left text-blue-800"></i> Riwayat Seluruh Pengajuan Izin &
+                            Cuti Resort
                         </h3>
                         <div class="overflow-x-auto max-h-60 overflow-y-auto">
                             <table class="w-full text-xs text-left border-collapse">
@@ -748,9 +1259,11 @@
                     <div class="flex flex-wrap items-center justify-between gap-4 border-b pb-4">
                         <div>
                             <h3 class="font-bold text-gray-800 text-base flex items-center gap-2">
-                                <i class="fa-solid fa-file-invoice-dollar text-emerald-600"></i> Modul Penggajian & Slip Gaji (Cut-off 26 - 25)
+                                <i class="fa-solid fa-file-invoice-dollar text-emerald-600"></i> Modul Penggajian & Slip
+                                Gaji (Cut-off 26 - 25)
                             </h3>
-                            <p class="text-xs text-gray-500">Siklus penggajian terhitung dari tgl 26 bulan lalu s/d tgl 25 bulan berjalan</p>
+                            <p class="text-xs text-gray-500">Siklus penggajian terhitung dari tgl 26 bulan lalu s/d tgl
+                                25 bulan berjalan</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <input type="month" id="payroll-month-picker" onchange="loadPayrollCalculation()"
@@ -832,7 +1345,8 @@
                     <div id="payroll-subtab-pinjaman" class="hidden space-y-4">
                         <div class="flex justify-between items-center">
                             <h4 class="font-bold text-gray-800 text-xs">Catatan Pinjaman / Kasbon Karyawan</h4>
-                            <button onclick="openModalAddLoan()" class="btn-primary px-3 py-1.5 text-xs">+ Tambah Pinjaman</button>
+                            <button onclick="openModalAddLoan()" class="btn-primary px-3 py-1.5 text-xs">+ Tambah
+                                Pinjaman</button>
                         </div>
                         <div class="overflow-x-auto border rounded-2xl">
                             <table class="w-full text-xs text-left border-collapse">
@@ -860,7 +1374,8 @@
                     <div class="flex flex-wrap items-center justify-between gap-4 border-b pb-4">
                         <div>
                             <h3 class="font-bold text-gray-800 text-base flex items-center gap-2">
-                                <i class="fa-solid fa-calendar-days text-blue-800"></i> Roster Jadwal Shift (Cut-off Periode Tgl 26 - 25)
+                                <i class="fa-solid fa-calendar-days text-blue-800"></i> Roster Jadwal Shift (Cut-off
+                                Periode Tgl 26 - 25)
                             </h3>
                             <p class="text-xs text-gray-500">Kolom Kuning = Sabtu, Kolom Merah = Minggu/Tgl Merah/PH</p>
                         </div>
@@ -883,7 +1398,8 @@
                         <table class="w-full text-xs text-left border-collapse">
                             <thead>
                                 <tr id="roster-table-header-row" class="bg-blue-900 text-white font-bold text-[11px]">
-                                    <th class="p-3 sticky left-0 bg-blue-900 z-10 min-w-[150px]">Departemen & NIK/Nama</th>
+                                    <th class="p-3 sticky left-0 bg-blue-900 z-10 min-w-[150px]">Departemen & NIK/Nama
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="table-roster-matrix">
@@ -923,7 +1439,8 @@
                         <div class="flex justify-between items-center">
                             <h3 class="font-bold text-gray-800 text-sm"><i
                                     class="fa-solid fa-clock text-blue-800 mr-2"></i>Daftar Shift Kerja</h3>
-                            <button onclick="openModalShift()" class="btn-primary px-3 py-1.5 text-xs">+ Tambah Shift</button>
+                            <button onclick="openModalShift()" class="btn-primary px-3 py-1.5 text-xs">+ Tambah
+                                Shift</button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs text-left">
@@ -946,7 +1463,8 @@
                         <div class="flex justify-between items-center">
                             <h3 class="font-bold text-gray-800 text-sm"><i
                                     class="fa-solid fa-building text-blue-800 mr-2"></i>Daftar Departemen</h3>
-                            <button onclick="openModalDepartemen()" class="btn-primary px-3 py-1.5 text-xs">+ Tambah Dept</button>
+                            <button onclick="openModalDepartemen()" class="btn-primary px-3 py-1.5 text-xs">+ Tambah
+                                Dept</button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs text-left">
@@ -969,7 +1487,8 @@
                     <div class="flex justify-between items-center border-b pb-4">
                         <div>
                             <h3 class="font-bold text-gray-800 text-base">Modul Mading Digital Resort</h3>
-                            <p class="text-xs text-gray-500">Kelola pengumuman & informasi internal Balcone Suites & Resort</p>
+                            <p class="text-xs text-gray-500">Kelola pengumuman & informasi internal Balcone Suites &
+                                Resort</p>
                         </div>
                         <button onclick="openModalMading()"
                             class="btn-primary px-4 py-2 text-xs flex items-center gap-2">
@@ -983,15 +1502,33 @@
 
                 <!-- Tab 7: Riwayat Absensi Global -->
                 <div id="tab-admin-global-absensi" class="hidden space-y-4">
-                    <div class="card-saas p-5 flex flex-wrap items-center justify-between gap-3">
-                        <div class="flex items-center gap-2 w-full sm:w-auto">
-                            <input type="text" id="search-attendance" placeholder="Cari nama / NIK..."
-                                onkeyup="fetchGlobalAttendance(1)"
-                                class="px-4 py-2 border rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-800">
+                    <div class="card-saas p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto flex-1">
+                            <div class="relative flex-1 sm:w-56 min-w-[150px]">
+                                <input type="text" id="search-attendance" placeholder="Cari NIK / Nama..."
+                                    onkeyup="fetchGlobalAttendance(1)"
+                                    class="w-full pl-8 pr-3 py-2 border rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50">
+                                <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </div>
+                            <div class="w-full sm:w-44">
+                                <select id="filter-dept-attendance" onchange="fetchGlobalAttendance(1)"
+                                    class="w-full px-3 py-2 border rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 text-slate-700 font-semibold">
+                                    <option value="ALL">Semua Departemen</option>
+                                </select>
+                            </div>
+                            <div class="w-full sm:w-40">
+                                <input type="date" id="filter-date-attendance" onchange="fetchGlobalAttendance(1)"
+                                    class="w-full px-3 py-2 border rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 text-slate-700 font-semibold" title="Filter Tanggal Spesifik">
+                            </div>
+                            <button onclick="resetGlobalAttendanceFilter()"
+                                class="px-3 py-2 text-xs text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-xl font-semibold transition" title="Reset Filter">
+                                Reset
+                            </button>
                         </div>
-                        <button onclick="downloadPDFReport()"
-                            class="btn-primary px-4 py-2 text-xs flex items-center gap-2">
-                            <i class="fa-solid fa-file-pdf"></i> Export PDF Laporan Balcone
+                        <button onclick="downloadAttendancePDFReport()" id="btn-export-pdf-absensi"
+                            class="w-full sm:w-auto btn-primary px-4 py-2 text-xs flex items-center justify-center gap-2 shadow-md">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <span>Export PDF Absensi</span>
                         </button>
                     </div>
 
@@ -1003,15 +1540,23 @@
                                         <th class="p-3">Tanggal</th>
                                         <th class="p-3">NIK & Nama</th>
                                         <th class="p-3">Departemen</th>
-                                        <th class="p-3">Jam Masuk</th>
-                                        <th class="p-3">Jam Pulang</th>
-                                        <th class="p-3">Status</th>
-                                        <th class="p-3">Keterlambatan</th>
+                                        <th class="p-3 text-center">Jam Masuk</th>
+                                        <th class="p-3 text-center">Jam Pulang</th>
+                                        <th class="p-3 text-center">Status</th>
+                                        <th class="p-3 text-center">Keterlambatan</th>
                                     </tr>
                                 </thead>
                                 <tbody id="table-global-absensi">
                                 </tbody>
                             </table>
+                        </div>
+                        <div id="pagination-global-absensi" class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs text-slate-500">
+                            <span id="label-page-absensi">Menampilkan data...</span>
+                            <div class="flex items-center gap-2">
+                                <button onclick="changeGlobalAttendancePage(-1)" id="btn-prev-absensi" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg font-bold disabled:opacity-40">&larr; Prev</button>
+                                <span id="current-page-absensi" class="font-bold text-indigo-900 font-mono">1</span>
+                                <button onclick="changeGlobalAttendancePage(1)" id="btn-next-absensi" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg font-bold disabled:opacity-40">Next &rarr;</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1021,10 +1566,12 @@
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h3 class="font-bold text-gray-800 text-sm">Penilaian KPI Kedisiplinan Karyawan Balcone</h3>
-                            <p class="text-[11px] text-gray-400">Dihitung otomatis berbasis siklus Cut-off Periode (Tgl 26 - 25)</p>
+                            <p class="text-[11px] text-gray-400">Dihitung otomatis berbasis siklus Cut-off Periode (Tgl
+                                26 - 25)</p>
                         </div>
                         <button onclick="loadKPI()"
-                            class="text-xs bg-blue-50 text-blue-800 px-3 py-1.5 rounded-xl font-bold">Kalkulasi Ulang</button>
+                            class="text-xs bg-blue-50 text-blue-800 px-3 py-1.5 rounded-xl font-bold">Kalkulasi
+                            Ulang</button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-xs text-left">
@@ -1050,11 +1597,13 @@
 
                         <div class="space-y-4 border-r pr-0 md:pr-6">
                             <h3 class="font-bold text-gray-800 text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-map-location-dot text-blue-800"></i> Pengaturan Lokasi Resort, PIN Payroll & Denda
+                                <i class="fa-solid fa-map-location-dot text-blue-800"></i> Pengaturan Lokasi Resort, PIN
+                                Payroll & Denda
                             </h3>
 
                             <div>
-                                <label class="block text-xs font-semibold text-gray-600 mb-1">Pilih Titik Kantor di Peta (Klik / Drag Marker)</label>
+                                <label class="block text-xs font-semibold text-gray-600 mb-1">Pilih Titik Kantor di Peta
+                                    (Klik / Drag Marker)</label>
                                 <div id="settings-map" class="w-full h-52 border border-gray-200 shadow-inner mb-1">
                                 </div>
                             </div>
@@ -1075,12 +1624,14 @@
 
                                 <div class="grid grid-cols-2 gap-2">
                                     <div>
-                                        <label class="block text-xs font-semibold text-gray-600 mb-1">Radius Meter</label>
+                                        <label class="block text-xs font-semibold text-gray-600 mb-1">Radius
+                                            Meter</label>
                                         <input type="number" id="cfg-radius" value="150" required
                                             class="w-full p-2.5 border rounded-xl text-xs">
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-semibold text-gray-600 mb-1">Secret Code QR</label>
+                                        <label class="block text-xs font-semibold text-gray-600 mb-1">Secret Code
+                                            QR</label>
                                         <input type="text" id="cfg-qr" value="BALCONE-QR-2026" oninput="renderQRCards()"
                                             required class="w-full p-2.5 border rounded-xl text-xs font-mono font-bold">
                                     </div>
@@ -1088,12 +1639,14 @@
 
                                 <div class="grid grid-cols-2 gap-2">
                                     <div>
-                                        <label class="block text-xs font-semibold text-gray-600 mb-1">PIN Gatekeeper Payroll (6 Digit)</label>
+                                        <label class="block text-xs font-semibold text-gray-600 mb-1">PIN Gatekeeper
+                                            Payroll (6 Digit)</label>
                                         <input type="password" id="cfg-pin-payroll" value="123456" maxlength="6"
                                             required class="w-full p-2.5 border rounded-xl text-xs font-mono font-bold">
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-semibold text-gray-600 mb-1">Rate Denda Late (Rp/Menit)</label>
+                                        <label class="block text-xs font-semibold text-gray-600 mb-1">Rate Denda Late
+                                            (Rp/Menit)</label>
                                         <input type="number" id="cfg-rate-denda" value="1000" required
                                             class="w-full p-2.5 border rounded-xl text-xs font-bold">
                                     </div>
@@ -1134,16 +1687,122 @@
                 </div>
 
             </div>
+
+            <!-- Mobile Admin Bottom Quick-Bar (Hanya di layar ponsel) -->
+            <nav id="admin-mobile-bottom-nav" class="mobile-bottom-nav lg:hidden fixed bottom-0 left-0 right-0 z-40 px-2 py-1.5 flex justify-around items-center">
+                <button onclick="switchAdminTab('dashboard')" id="mob-nav-admin-dashboard" class="bottom-nav-item active text-indigo-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+                    <span class="text-[10px] mt-0.5">Dashboard</span>
+                </button>
+                <button onclick="switchAdminTab('global-absensi')" id="mob-nav-admin-global-absensi" class="bottom-nav-item text-slate-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                    <span class="text-[10px] mt-0.5">Absensi</span>
+                </button>
+                <button onclick="switchAdminTab('roster')" id="mob-nav-admin-roster" class="bottom-nav-item text-slate-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span class="text-[10px] mt-0.5">Roster</span>
+                </button>
+                <button onclick="openPayrollGatekeeper()" id="mob-nav-admin-payroll" class="bottom-nav-item text-emerald-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <span class="text-[10px] mt-0.5 font-bold">Payroll</span>
+                </button>
+                <button onclick="toggleAdminMobileDrawer(true)" id="mob-nav-admin-more" class="bottom-nav-item text-slate-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <span class="text-[10px] mt-0.5">Lainnya</span>
+                </button>
+            </nav>
+
+            <!-- Mobile Admin Drawer Backdrop & Slide-out Menu -->
+            <div id="admin-mobile-drawer-overlay" onclick="toggleAdminMobileDrawer(false)"
+                class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 opacity-0 transition-opacity">
+            </div>
+            <div id="admin-mobile-drawer"
+                class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white z-50 p-6 shadow-2xl flex flex-col justify-between translate-x-full overflow-y-auto">
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 bg-gradient-to-tr from-indigo-600 to-emerald-500 text-white rounded-xl flex items-center justify-center font-bold text-sm shadow-md">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-extrabold text-xs text-slate-900">THE BALCONE</h4>
+                                <p class="text-[10px] text-indigo-600 font-semibold">Menu Navigasi HRD</p>
+                            </div>
+                        </div>
+                        <button onclick="toggleAdminMobileDrawer(false)" class="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+
+                    <nav class="space-y-1">
+                        <button onclick="switchAdminTab('dashboard')" class="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
+                            <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+                            Dashboard Analytics
+                        </button>
+                        <button onclick="openPayrollGatekeeper()" class="w-full text-left px-3.5 py-2.5 text-xs font-bold text-emerald-800 bg-emerald-50/80 border border-emerald-200/60 rounded-xl flex items-center justify-between transition">
+                            <span class="flex items-center gap-3">
+                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                Payroll & Slip Gaji
+                            </span>
+                            <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        </button>
+                        <button onclick="switchAdminTab('roster')" class="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
+                            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            Roster Shift (Cut-Off 26-25)
+                        </button>
+                        <button onclick="switchAdminTab('approval-karyawan')" class="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl flex items-center justify-between transition">
+                            <span class="flex items-center gap-3">
+                                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Verifikasi Karyawan
+                            </span>
+                            <span id="badge-pending-emp-drawer" class="bg-amber-500 text-white font-extrabold text-[9px] px-1.5 py-0.5 rounded-full hidden">0</span>
+                        </button>
+                        <button onclick="switchAdminTab('shift-dept')" class="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
+                            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                            Kelola Shift & Dept
+                        </button>
+                        <button onclick="switchAdminTab('mading')" class="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
+                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                            Mading Digital
+                        </button>
+                        <button onclick="switchAdminTab('global-absensi')" class="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
+                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            Riwayat Absensi
+                        </button>
+                        <button onclick="switchAdminTab('kpi')" class="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
+                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                            Penilaian KPI
+                        </button>
+                        <button onclick="switchAdminTab('settings')" class="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition">
+                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Settings & Cetak QR
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="space-y-2 pt-6 border-t border-slate-100">
+                    <button onclick="manualRefreshData()" class="w-full py-2.5 text-xs text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-xl font-bold flex items-center justify-center gap-2 transition active:scale-95">
+                        <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        Refresh Data
+                    </button>
+                    <button onclick="logout()" class="w-full py-2.5 text-xs text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-xl font-bold flex items-center justify-center gap-2 transition active:scale-95">
+                        <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                        Logout Admin
+                    </button>
+                </div>
+            </div>
         </div>
 
     </div>
 
     <!-- MODAL 1: PIN GATEKEEPER PAYROLL -->
     <div id="modal-payroll-pin"
-        class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
-        <div class="card-saas p-6 w-full max-w-xs text-center space-y-4">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-xs text-center space-y-4 rounded-t-3xl sm:rounded-3xl animate-sheet mx-auto sm:my-auto mb-0 border border-slate-200/80 shadow-2xl">
             <div
-                class="w-12 h-12 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto text-xl">
+                class="w-12 h-12 bg-emerald-100 text-emerald-800 rounded-2xl flex items-center justify-center mx-auto text-xl shadow-inner">
                 <i class="fa-solid fa-shield-halved"></i>
             </div>
             <div>
@@ -1160,15 +1819,16 @@
                 <button onclick="closePayrollPinModal()"
                     class="w-1/2 py-2.5 bg-gray-100 text-gray-600 rounded-xl text-xs font-bold">Batal</button>
                 <button onclick="submitPayrollPin()"
-                    class="w-1/2 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold">Buka Modul</button>
+                    class="w-1/2 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold">Buka
+                    Modul</button>
             </div>
         </div>
     </div>
 
     <!-- MODAL 2: EDIT MASTER STRUKTUR GAJI -->
     <div id="modal-edit-salary-master"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="card-saas p-6 w-full max-w-md space-y-4">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-md space-y-4 rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto animate-sheet border border-slate-200/80 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-2">
                 <h3 class="font-bold text-gray-800 text-sm">Edit Struktur Gaji Master Karyawan</h3>
                 <button onclick="closeModalSalaryMaster()" class="text-gray-400 hover:text-gray-600"><i
@@ -1177,7 +1837,8 @@
 
             <form onsubmit="handleSaveSalaryMasterSubmit(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="salmaster-nik">
-                <div id="salmaster-emp-info" class="p-2.5 bg-blue-50 text-blue-900 font-bold rounded-xl">NIK & Nama</div>
+                <div id="salmaster-emp-info" class="p-2.5 bg-blue-50 text-blue-900 font-bold rounded-xl">NIK & Nama
+                </div>
 
                 <div>
                     <label class="block font-semibold text-gray-600 mb-1">Gaji Pokok / Rate Harian (Rp)</label>
@@ -1245,8 +1906,8 @@
 
     <!-- MODAL 3: SET STATUS RESIGN KARYAWAN -->
     <div id="modal-set-resign"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="card-saas p-6 w-full max-w-sm space-y-4 text-xs">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-sm space-y-4 text-xs rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto animate-sheet border border-slate-200/80 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-2">
                 <h3 class="font-bold text-gray-800 text-sm">Set Status Resign Karyawan</h3>
                 <button onclick="closeModalSetResign()" class="text-gray-400 hover:text-gray-600"><i
@@ -1274,7 +1935,8 @@
                     <button type="button" onclick="closeModalSetResign()"
                         class="px-4 py-2 bg-gray-100 text-gray-600 rounded-xl font-semibold">Batal</button>
                     <button type="submit"
-                        class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2 rounded-xl font-bold">Simpan Status</button>
+                        class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2 rounded-xl font-bold">Simpan
+                        Status</button>
                 </div>
             </form>
         </div>
@@ -1282,8 +1944,8 @@
 
     <!-- MODAL 4: CATAT PINJAMAN / KASBON BARU -->
     <div id="modal-add-loan"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="card-saas p-6 w-full max-w-sm space-y-3 text-xs">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-sm space-y-3 text-xs rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto animate-sheet border border-slate-200/80 shadow-2xl">
             <h3 class="font-bold text-gray-800 text-sm border-b pb-2">Catat Pinjaman Karyawan Baru</h3>
             <form onsubmit="handleSaveLoanSubmit(event)" class="space-y-3">
                 <div>
@@ -1315,8 +1977,8 @@
 
     <!-- MODAL 5: KELOLA SHIFT KERJA -->
     <div id="modal-shift"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="card-saas p-6 w-full max-w-sm space-y-4 text-xs">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-sm space-y-4 text-xs rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto animate-sheet border border-slate-200/80 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-2">
                 <h3 class="font-bold text-gray-800 text-sm" id="modal-shift-title">Tambah Shift Kerja</h3>
                 <button onclick="closeModalShift()" class="text-gray-400 hover:text-gray-600"><i
@@ -1362,8 +2024,8 @@
 
     <!-- MODAL 6: KELOLA DEPARTEMEN -->
     <div id="modal-departemen"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="card-saas p-6 w-full max-w-sm space-y-4 text-xs">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-sm space-y-4 text-xs rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto animate-sheet border border-slate-200/80 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-2">
                 <h3 class="font-bold text-gray-800 text-sm">Tambah Departemen Baru</h3>
                 <button onclick="closeModalDepartemen()" class="text-gray-400 hover:text-gray-600"><i
@@ -1389,8 +2051,8 @@
 
     <!-- MODAL 7: SLIP GAJI VIEW & PRINT -->
     <div id="modal-payslip-view"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 overflow-y-auto">
-        <div class="card-saas p-6 w-full max-w-lg my-8 space-y-4 text-xs">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-lg space-y-4 text-xs rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto animate-sheet border border-slate-200/80 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 class="font-bold text-gray-800 text-sm flex items-center gap-2"><i
                         class="fa-solid fa-file-invoice-dollar text-emerald-600"></i> Slip Gaji Karyawan Balcone</h3>
@@ -1433,16 +2095,19 @@
 
                 <div class="grid grid-cols-2 gap-6">
                     <div class="space-y-2">
-                        <h4 class="font-bold text-emerald-700 border-b pb-1 text-xs uppercase tracking-wider">A. Pendapatan (Earnings)</h4>
+                        <h4 class="font-bold text-emerald-700 border-b pb-1 text-xs uppercase tracking-wider">A.
+                            Pendapatan (Earnings)</h4>
                         <div class="flex justify-between"><span>Gaji Pokok / Upah Hadir:</span><span
                                 class="font-mono font-bold" id="ps-earning-pokok">Rp 0</span></div>
                         <div class="flex justify-between"><span>Tunjangan Tetap:</span><span class="font-mono font-bold"
                                 id="ps-earning-tunjangan">Rp 0</span></div>
-                        <div class="flex justify-between border-t pt-1 font-bold text-emerald-800"><span>Total Pendapatan:</span><span class="font-mono" id="ps-earning-total">Rp 0</span></div>
+                        <div class="flex justify-between border-t pt-1 font-bold text-emerald-800"><span>Total
+                                Pendapatan:</span><span class="font-mono" id="ps-earning-total">Rp 0</span></div>
                     </div>
 
                     <div class="space-y-2">
-                        <h4 class="font-bold text-rose-700 border-b pb-1 text-xs uppercase tracking-wider">B. Potongan (Deductions)</h4>
+                        <h4 class="font-bold text-rose-700 border-b pb-1 text-xs uppercase tracking-wider">B. Potongan
+                            (Deductions)</h4>
                         <div class="flex justify-between"><span>BPJS Ketenagakerjaan:</span><span class="font-mono"
                                 id="ps-ded-bpjstk">Rp 0</span></div>
                         <div class="flex justify-between"><span>BPJS Kesehatan:</span><span class="font-mono"
@@ -1451,13 +2116,15 @@
                                 id="ps-ded-denda">Rp 0</span></div>
                         <div class="flex justify-between"><span>Cicilan Pinjaman:</span><span class="font-mono"
                                 id="ps-ded-kasbon">Rp 0</span></div>
-                        <div class="flex justify-between border-t pt-1 font-bold text-rose-800"><span>Total Potongan:</span><span class="font-mono" id="ps-ded-total">Rp 0</span></div>
+                        <div class="flex justify-between border-t pt-1 font-bold text-rose-800"><span>Total
+                                Potongan:</span><span class="font-mono" id="ps-ded-total">Rp 0</span></div>
                     </div>
                 </div>
 
                 <div class="bg-blue-900 text-white p-4 rounded-xl flex justify-between items-center shadow-lg">
                     <div>
-                        <p class="text-[10px] uppercase tracking-widest text-blue-200 font-bold">Take Home Pay (THP Bersih)</p>
+                        <p class="text-[10px] uppercase tracking-widest text-blue-200 font-bold">Take Home Pay (THP
+                            Bersih)</p>
                         <p class="text-xl font-extrabold font-mono" id="ps-thp-total">Rp 0</p>
                     </div>
                     <div class="text-right text-[10px] text-blue-200">
@@ -1475,15 +2142,16 @@
 
     <!-- MODAL 8: CATATAN ALASAN PENOLAKAN -->
     <div id="modal-reject-reason"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="card-saas p-6 w-full max-w-md">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-md rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto animate-sheet border border-slate-200/80 shadow-2xl">
             <div class="flex justify-between items-center mb-3 border-b pb-2">
                 <h3 class="font-bold text-gray-800 text-sm text-rose-600"><i
                         class="fa-solid fa-circle-xmark mr-1.5"></i>Alasan Penolakan Pengajuan</h3>
                 <button onclick="closeModalRejectReason()" class="text-gray-400 hover:text-gray-600"><i
                         class="fa-solid fa-xmark"></i></button>
             </div>
-            <p class="text-xs text-gray-500 mb-3">Berikan catatan atau alasan penolakan agar karyawan dapat memahami pertimbangan manajemen.</p>
+            <p class="text-xs text-gray-500 mb-3">Berikan catatan atau alasan penolakan agar karyawan dapat memahami
+                pertimbangan manajemen.</p>
             <input type="hidden" id="reject-target-id">
             <div>
                 <textarea id="reject-reason-input" rows="3" required placeholder="Tuliskan alasan penolakan..."
@@ -1493,15 +2161,16 @@
                 <button type="button" onclick="closeModalRejectReason()"
                     class="px-4 py-2 bg-gray-100 text-gray-600 rounded-xl text-xs font-semibold">Batal</button>
                 <button type="button" onclick="confirmSubmitRejection()"
-                    class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2 rounded-xl text-xs font-bold">Kirim Penolakan</button>
+                    class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2 rounded-xl text-xs font-bold">Kirim
+                    Penolakan</button>
             </div>
         </div>
     </div>
 
     <!-- MODAL 9: EDIT PROFIL & PASSWORD KARYAWAN -->
     <div id="modal-edit-profil"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 overflow-y-auto">
-        <div class="card-saas p-6 w-full max-w-xl my-8 max-h-[90vh] overflow-y-auto">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl animate-sheet border border-slate-200/80 shadow-2xl">
             <div class="flex justify-between items-center mb-4 border-b pb-3">
                 <div>
                     <h3 class="font-bold text-gray-800 text-base">Edit Data Profil & Password</h3>
@@ -1580,8 +2249,8 @@
 
     <!-- MODAL 10: PENDAFTARAN KARYAWAN BARU -->
     <div id="modal-register"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 overflow-y-auto">
-        <div class="card-saas p-6 w-full max-w-xl my-8 max-h-[90vh] overflow-y-auto">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl animate-sheet border border-slate-200/80 shadow-2xl">
             <div class="flex justify-between items-center mb-4 border-b pb-3">
                 <div>
                     <h3 class="font-bold text-gray-800 text-base">Pendaftaran Karyawan Baru</h3>
@@ -1693,13 +2362,13 @@
 
     <!-- MODAL 11: SCANNER QR CODE ABSENSI -->
     <div id="modal-qr"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="card-saas p-6 w-full max-w-sm text-center">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-sm text-center rounded-t-3xl sm:rounded-3xl animate-sheet border border-slate-200/80 shadow-2xl">
             <h3 class="font-bold text-gray-800 mb-1">Scan QR Code Balcone</h3>
             <p class="text-xs text-gray-500 mb-4">Arahkan kamera ke QR Code di area resort.</p>
 
             <div
-                class="relative w-full aspect-square bg-gray-900 rounded-2xl overflow-hidden mb-4 flex items-center justify-center">
+                class="relative w-full aspect-square bg-gray-900 rounded-2xl overflow-hidden mb-4 flex items-center justify-center shadow-inner">
                 <div id="qr-loading"
                     class="absolute inset-0 flex flex-col items-center justify-center text-white/70 text-xs gap-2 z-10 bg-gray-900">
                     <i class="fa-solid fa-spinner fa-spin text-2xl text-blue-500"></i>
@@ -1709,14 +2378,15 @@
             </div>
 
             <button onclick="closeQRScanner()"
-                class="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition">Batal / Tutup Kamera</button>
+                class="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition">Batal
+                / Tutup Kamera</button>
         </div>
     </div>
 
     <!-- MODAL 12: FORM PENGAJUAN CUTI / IZIN -->
     <div id="modal-izin"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="card-saas p-6 w-full max-w-md">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-md rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto animate-sheet border border-slate-200/80 shadow-2xl">
             <h3 class="font-bold text-gray-800 mb-4">Form Pengajuan Cuti / Izin</h3>
             <form onsubmit="handleIzinSubmit(event)" class="space-y-3">
                 <div>
@@ -1764,10 +2434,11 @@
 
     <!-- MODAL 13: FORM MADING DIGITAL RESORT -->
     <div id="modal-mading"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 overflow-y-auto">
-        <div class="card-saas p-6 w-full max-w-md my-8">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-md rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto animate-sheet border border-slate-200/80 shadow-2xl">
             <div class="flex justify-between items-center mb-4 border-b pb-2">
-                <h3 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-newspaper text-blue-800 mr-2"></i>Form Mading Digital Resort</h3>
+                <h3 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-newspaper text-blue-800 mr-2"></i>Form
+                    Mading Digital Resort</h3>
                 <button onclick="closeModalMading()" class="text-gray-400 hover:text-gray-600"><i
                         class="fa-solid fa-xmark"></i></button>
             </div>
@@ -1806,8 +2477,8 @@
 
     <!-- MODAL 14: DETAIL MADING & DOWNLOAD FOTO -->
     <div id="modal-mading-detail"
-        class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
-        <div class="card-saas p-6 w-full max-w-lg bg-white space-y-4 max-h-[90vh] overflow-y-auto">
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 z-50 transition-all">
+        <div class="card-saas p-6 w-full max-w-lg bg-white space-y-4 max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl animate-sheet border border-slate-200/80 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-2">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-newspaper text-blue-800 text-lg"></i>
@@ -1837,7 +2508,8 @@
                     class="px-4 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold rounded-xl text-xs flex items-center gap-1.5 transition">
                     <i class="fa-solid fa-download"></i> Unduh Foto Mading
                 </button>
-                <button onclick="closeModalDetailMading()" class="btn-primary px-5 py-2 text-xs">Tutup Pengumuman</button>
+                <button onclick="closeModalDetailMading()" class="btn-primary px-5 py-2 text-xs">Tutup
+                    Pengumuman</button>
             </div>
         </div>
     </div>
@@ -2064,7 +2736,10 @@
                     if (tabId === 'roster') fetchRosterData();
                     else if (tabId === 'payroll') loadPayrollCalculation();
                     else if (tabId === 'shift-dept') loadShiftDeptData();
-                    else if (tabId === 'global-absensi') fetchGlobalAttendance(1);
+                    else if (tabId === 'global-absensi') {
+                        populateDeptFilterAttendance();
+                        fetchGlobalAttendance(1);
+                    }
                     else if (tabId === 'kpi') loadKPI();
                 }
             } else {
@@ -2075,11 +2750,112 @@
             }
         }
 
+        /* ==========================================================================
+           ZETTBOT HYBRID NAVIGATION CONTROLLERS (MOBILE & DESKTOP)
+           ========================================================================== */
+        function switchEmpTab(tabName) {
+            const tabs = ['home', 'presensi', 'roster', 'cuti', 'mading', 'riwayat'];
+            tabs.forEach(t => {
+                const tabElem = document.getElementById('tab-emp-' + t);
+                const deskBtn = document.getElementById('desk-tab-emp-' + t);
+                const mobBtn = document.getElementById('mob-nav-emp-' + t);
+
+                if (tabElem) {
+                    if (t === tabName) {
+                        tabElem.classList.remove('hidden');
+                    } else {
+                        tabElem.classList.add('hidden');
+                    }
+                }
+
+                if (deskBtn) {
+                    if (t === tabName) {
+                        deskBtn.className = "px-4 py-2 text-xs font-bold rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/20 transition flex items-center gap-2";
+                    } else {
+                        deskBtn.className = "px-4 py-2 text-xs font-semibold rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/60 transition flex items-center gap-2";
+                    }
+                }
+
+                if (mobBtn) {
+                    if (t === tabName) {
+                        mobBtn.className = "bottom-nav-item active text-indigo-600 font-bold";
+                    } else {
+                        mobBtn.className = "bottom-nav-item text-slate-400";
+                    }
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchEmpMobileSection(secName) {
+            switchEmpTab(secName);
+        }
+
+        function toggleAdminMobileDrawer(isOpen) {
+            const drawer = document.getElementById('admin-mobile-drawer');
+            const overlay = document.getElementById('admin-mobile-drawer-overlay');
+            if (!drawer || !overlay) return;
+
+            if (isOpen) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-0');
+                    drawer.classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                overlay.classList.add('opacity-0');
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+        }
+
         function switchAdminTab(tabName) {
             const tabs = [
                 'dashboard', 'payroll', 'roster', 'approval-karyawan',
                 'shift-dept', 'mading', 'global-absensi', 'kpi', 'settings'
             ];
+
+            // Auto-close mobile drawer if open
+            toggleAdminMobileDrawer(false);
+
+            // Sync Mobile Admin Bottom Quick-Bar
+            const mobNavMap = {
+                'dashboard': 'mob-nav-admin-dashboard',
+                'global-absensi': 'mob-nav-admin-global-absensi',
+                'roster': 'mob-nav-admin-roster',
+                'payroll': 'mob-nav-admin-payroll'
+            };
+
+            ['dashboard', 'global-absensi', 'roster', 'payroll', 'more'].forEach(m => {
+                const mobBtn = document.getElementById('mob-nav-admin-' + m);
+                if (mobBtn) {
+                    mobBtn.classList.remove('active', 'text-indigo-600', 'font-bold');
+                    if (m === 'payroll') {
+                        mobBtn.className = "bottom-nav-item text-emerald-600";
+                    } else {
+                        mobBtn.className = "bottom-nav-item text-slate-400";
+                    }
+                }
+            });
+
+            if (mobNavMap[tabName]) {
+                const activeMobBtn = document.getElementById(mobNavMap[tabName]);
+                if (activeMobBtn) {
+                    if (tabName === 'payroll') {
+                        activeMobBtn.className = "bottom-nav-item active text-emerald-700 font-bold";
+                    } else {
+                        activeMobBtn.className = "bottom-nav-item active text-indigo-600 font-bold";
+                    }
+                }
+            } else {
+                const moreBtn = document.getElementById('mob-nav-admin-more');
+                if (moreBtn) {
+                    moreBtn.className = "bottom-nav-item active text-indigo-600 font-bold";
+                }
+            }
 
             tabs.forEach(t => {
                 const tabElem = document.getElementById('tab-admin-' + t);
@@ -2103,7 +2879,10 @@
 
             if (tabName === 'roster') fetchRosterData();
             else if (tabName === 'shift-dept') loadShiftDeptData();
-            else if (tabName === 'global-absensi') fetchGlobalAttendance(1);
+            else if (tabName === 'global-absensi') {
+                populateDeptFilterAttendance();
+                fetchGlobalAttendance(1);
+            }
             else if (tabName === 'kpi') loadKPI();
             else if (tabName === 'settings') loadOfficeSettings();
         }
@@ -2275,7 +3054,7 @@
                 if (res && res.success) {
                     try {
                         const stats = res.stats || {};
-                        
+
                         const setElText = (id, val) => {
                             const el = document.getElementById(id);
                             if (el) el.innerText = (val !== undefined && val !== null) ? val : 0;
@@ -2287,13 +3066,19 @@
                         setElText('stat-pending-izin', stats.totalPendingIzin);
 
                         const badgeEmp = document.getElementById('badge-pending-emp');
-                        if (badgeEmp) {
-                            if (stats.totalPendingKaryawan && stats.totalPendingKaryawan > 0) {
+                        const badgeEmpDrawer = document.getElementById('badge-pending-emp-drawer');
+                        if (stats.totalPendingKaryawan && stats.totalPendingKaryawan > 0) {
+                            if (badgeEmp) {
                                 badgeEmp.innerText = stats.totalPendingKaryawan;
                                 badgeEmp.classList.remove('hidden');
-                            } else {
-                                badgeEmp.classList.add('hidden');
                             }
+                            if (badgeEmpDrawer) {
+                                badgeEmpDrawer.innerText = stats.totalPendingKaryawan;
+                                badgeEmpDrawer.classList.remove('hidden');
+                            }
+                        } else {
+                            if (badgeEmp) badgeEmp.classList.add('hidden');
+                            if (badgeEmpDrawer) badgeEmpDrawer.classList.add('hidden');
                         }
 
                         const tbodyEditProfil = document.getElementById('table-pending-edit-profil');
@@ -2447,6 +3232,9 @@
         }
 
         function loadKaryawanDashboard(isSilent = false, targetMonth = null) {
+            if (!targetMonth && !isSilent) {
+                switchEmpTab('home');
+            }
             document.getElementById('emp-nama').innerText = currentUser.nama;
             document.getElementById('emp-nik-badge').innerText = currentUser.nik;
             document.getElementById('emp-dept-role').innerText = currentUser.departemen + ' • ' + currentUser.jabatan;
@@ -2698,6 +3486,7 @@
                     });
 
                     fetchHODRosterData();
+                    fetchHODAttendanceList(1);
                 }
             }, function (err) {
                 if (!isSilent) showToast('Gagal memuat dashboard HOD.', 'error');
@@ -2890,40 +3679,213 @@
             reader.readAsArrayBuffer(file);
         }
 
-        function fetchGlobalAttendance(page = 1) {
-            const searchKey = document.getElementById('search-attendance').value;
-            runBackend('getGlobalAttendanceList', [searchKey, 'ALL', page, 15], function (res) {
-                if (res.success) {
-                    const tbody = document.getElementById('table-global-absensi');
-                    tbody.innerHTML = '';
-                    res.data.forEach(item => {
-                        const tr = document.createElement('tr');
-                        tr.className = 'border-b hover:bg-gray-50';
-                        tr.innerHTML = '<td class="p-3 font-semibold">' + item.tanggal + '</td>' +
-                            '<td class="p-3"><div class="font-bold text-blue-800">' + item.nik + '</div><div>' + item.nama_karyawan + '</div></td>' +
-                            '<td class="p-3">' + item.departemen + '</td>' +
-                            '<td class="p-3 font-mono text-emerald-700">' + (item.jam_masuk || '-') + '</td>' +
-                            '<td class="p-3 font-mono text-rose-700">' + (item.jam_pulang || '-') + '</td>' +
-                            '<td class="p-3"><span class="px-2 py-1 rounded text-[10px] font-bold ' + (item.status === 'Tepat Waktu' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800') + '">' + item.status + '</span></td>' +
-                            '<td class="p-3 font-mono text-rose-600">' + item.keterlambatan_menit + ' mnt</td>';
-                        tbody.appendChild(tr);
+        let currentGlobalAttendancePage = 1;
+        let totalGlobalAttendancePages = 1;
+        let currentHODAttendancePage = 1;
+        let totalHODAttendancePages = 1;
+
+        function populateDeptFilterAttendance() {
+            const select = document.getElementById('filter-dept-attendance');
+            if (!select || select.options.length > 1) return;
+            runBackend('getDepartemenList', [], function (res) {
+                if (res && res.success && Array.isArray(res.data)) {
+                    res.data.forEach(d => {
+                        const opt = document.createElement('option');
+                        opt.value = d.nama_departemen;
+                        opt.textContent = d.nama_departemen;
+                        select.appendChild(opt);
                     });
                 }
             });
         }
 
-        function downloadPDFReport() {
-            const pickerStr = getActiveCutoffMonthStr();
+        function fetchGlobalAttendance(page = 1) {
+            currentGlobalAttendancePage = page;
+            const s = document.getElementById('search-attendance');
+            const d = document.getElementById('filter-dept-attendance');
+            const dt = document.getElementById('filter-date-attendance');
 
-            showToast('Memproses PDF Laporan Balcone...', 'info');
-            runBackend('generatePDFReport', [pickerStr], function (res) {
-                if (res.success) {
+            const searchKey = s ? s.value.trim() : '';
+            const filterDept = d ? d.value : 'ALL';
+            const filterDateMonth = dt ? dt.value.trim() : '';
+
+            const tbody = document.getElementById('table-global-absensi');
+            if (tbody) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Memuat riwayat kehadiran...</td></tr>';
+            }
+
+            runBackend('getGlobalAttendanceList', [searchKey, filterDept, filterDateMonth, page, 15], function (res) {
+                if (!tbody) return;
+                if (res && res.success && Array.isArray(res.data)) {
+                    tbody.innerHTML = '';
+                    if (res.data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">Tidak ada data kehadiran yang sesuai filter.</td></tr>';
+                    } else {
+                        res.data.forEach(item => {
+                            const tr = document.createElement('tr');
+                            tr.className = 'border-b hover:bg-slate-50/70 transition';
+                            const statusClass = item.status === 'Tepat Waktu'
+                                ? 'bg-emerald-100 text-emerald-800'
+                                : (item.status === 'Terlambat' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800');
+
+                            tr.innerHTML = '<td class="p-3 font-semibold text-slate-700 whitespace-nowrap">' + (item.tanggal || '-') + '</td>' +
+                                '<td class="p-3"><div class="font-bold text-indigo-900">' + (item.nik || '-') + '</div><div class="text-slate-600 font-medium">' + (item.nama_karyawan || '-') + '</div></td>' +
+                                '<td class="p-3 font-semibold text-slate-700">' + (item.departemen || '-') + '</td>' +
+                                '<td class="p-3 text-center font-mono font-bold text-emerald-700">' + (item.jam_masuk || '-') + '</td>' +
+                                '<td class="p-3 text-center font-mono font-bold text-rose-700">' + (item.jam_pulang || '-') + '</td>' +
+                                '<td class="p-3 text-center"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold ' + statusClass + '">' + (item.status || '-') + '</span></td>' +
+                                '<td class="p-3 text-center font-mono font-bold ' + (item.keterlambatan_menit > 0 ? 'text-rose-600' : 'text-slate-400') + '">' + (item.keterlambatan_menit ? item.keterlambatan_menit + ' mnt' : '0 mnt') + '</td>';
+                            tbody.appendChild(tr);
+                        });
+                    }
+
+                    totalGlobalAttendancePages = res.totalPages || 1;
+                    const curPageEl = document.getElementById('current-page-absensi');
+                    if (curPageEl) curPageEl.textContent = page;
+                    const labelPageEl = document.getElementById('label-page-absensi');
+                    if (labelPageEl) labelPageEl.textContent = 'Menampilkan halaman ' + page + ' dari ' + totalGlobalAttendancePages + ' (' + (res.total || 0) + ' total)';
+
+                    const btnPrev = document.getElementById('btn-prev-absensi');
+                    const btnNext = document.getElementById('btn-next-absensi');
+                    if (btnPrev) btnPrev.disabled = (page <= 1);
+                    if (btnNext) btnNext.disabled = (page >= totalGlobalAttendancePages);
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-rose-500 font-semibold">' + (res ? res.message : 'Gagal memuat data') + '</td></tr>';
+                }
+            });
+        }
+
+        function changeGlobalAttendancePage(delta) {
+            const targetPage = currentGlobalAttendancePage + delta;
+            if (targetPage >= 1 && targetPage <= totalGlobalAttendancePages) {
+                fetchGlobalAttendance(targetPage);
+            }
+        }
+
+        function resetGlobalAttendanceFilter() {
+            const s = document.getElementById('search-attendance');
+            const d = document.getElementById('filter-dept-attendance');
+            const dt = document.getElementById('filter-date-attendance');
+            if (s) s.value = '';
+            if (d) d.value = 'ALL';
+            if (dt) dt.value = '';
+            fetchGlobalAttendance(1);
+        }
+
+        function downloadAttendancePDFReport() {
+            const s = document.getElementById('search-attendance');
+            const d = document.getElementById('filter-dept-attendance');
+            const dt = document.getElementById('filter-date-attendance');
+
+            const searchKey = s ? s.value.trim() : '';
+            const filterDept = d ? d.value : 'ALL';
+            const filterDateMonth = dt ? dt.value.trim() : '';
+
+            showToast('Memproses PDF Laporan Absensi Balcone...', 'info');
+            runBackend('generateAttendancePDFReport', [searchKey, filterDept, filterDateMonth], function (res) {
+                if (res && res.success) {
                     const link = document.createElement('a');
                     link.href = res.pdfBase64;
-                    link.download = res.fileName;
+                    link.download = res.fileName || 'Laporan_Absensi_Balcone.pdf';
                     link.click();
-                    showToast('Laporan PDF Berhasil Diunduh!', 'success');
-                } else showToast(res.message, 'error');
+                    showToast('Laporan PDF Absensi Berhasil Diunduh!', 'success');
+                } else {
+                    showToast(res ? res.message : 'Gagal mengunduh PDF', 'error');
+                }
+            });
+        }
+
+        function downloadPDFReport() {
+            downloadAttendancePDFReport();
+        }
+
+        function fetchHODAttendanceList(page = 1) {
+            if (!currentUser || !currentUser.nik) return;
+            currentHODAttendancePage = page;
+
+            const s = document.getElementById('search-hod-attendance');
+            const dt = document.getElementById('filter-date-hod-attendance');
+            const searchKey = s ? s.value.trim() : '';
+            const filterDateMonth = dt ? dt.value.trim() : '';
+
+            const tbody = document.getElementById('table-hod-attendance-matrix');
+            if (tbody) {
+                tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Memuat riwayat kehadiran departemen...</td></tr>';
+            }
+
+            runBackend('getHODAttendanceList', [currentUser.nik, searchKey, filterDateMonth, page, 15], function (res) {
+                if (!tbody) return;
+                if (res && res.success && Array.isArray(res.data)) {
+                    tbody.innerHTML = '';
+                    if (res.data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-400">Tidak ada riwayat kehadiran staf pada filter ini.</td></tr>';
+                    } else {
+                        res.data.forEach(item => {
+                            const tr = document.createElement('tr');
+                            tr.className = 'border-b hover:bg-purple-50/40 transition';
+                            const statusClass = item.status === 'Tepat Waktu'
+                                ? 'bg-emerald-100 text-emerald-800'
+                                : (item.status === 'Terlambat' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800');
+
+                            tr.innerHTML = '<td class="p-2.5 font-semibold text-slate-700 whitespace-nowrap">' + (item.tanggal || '-') + '</td>' +
+                                '<td class="p-2.5"><div class="font-bold text-purple-900">' + (item.nik || '-') + '</div><div class="text-slate-600 font-medium">' + (item.nama_karyawan || '-') + '</div></td>' +
+                                '<td class="p-2.5 text-center font-mono font-bold text-emerald-700">' + (item.jam_masuk || '-') + '</td>' +
+                                '<td class="p-2.5 text-center font-mono font-bold text-rose-700">' + (item.jam_pulang || '-') + '</td>' +
+                                '<td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ' + statusClass + '">' + (item.status || '-') + '</span></td>' +
+                                '<td class="p-2.5 text-center font-mono font-bold ' + (item.keterlambatan_menit > 0 ? 'text-rose-600' : 'text-slate-400') + '">' + (item.keterlambatan_menit ? item.keterlambatan_menit + ' mnt' : '0 mnt') + '</td>';
+                            tbody.appendChild(tr);
+                        });
+                    }
+
+                    totalHODAttendancePages = res.totalPages || 1;
+                    const curPageEl = document.getElementById('current-page-hod-absensi');
+                    if (curPageEl) curPageEl.textContent = page;
+                    const labelPageEl = document.getElementById('label-page-hod-attendance');
+                    if (labelPageEl) labelPageEl.textContent = 'Menampilkan halaman ' + page + ' dari ' + totalHODAttendancePages + ' (' + (res.total || 0) + ' total)';
+
+                    const btnPrev = document.getElementById('btn-prev-hod-absensi');
+                    const btnNext = document.getElementById('btn-next-hod-absensi');
+                    if (btnPrev) btnPrev.disabled = (page <= 1);
+                    if (btnNext) btnNext.disabled = (page >= totalHODAttendancePages);
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-rose-500 font-semibold">' + (res ? res.message : 'Gagal memuat data') + '</td></tr>';
+                }
+            });
+        }
+
+        function changeHODAttendancePage(delta) {
+            const targetPage = currentHODAttendancePage + delta;
+            if (targetPage >= 1 && targetPage <= totalHODAttendancePages) {
+                fetchHODAttendanceList(targetPage);
+            }
+        }
+
+        function resetHODAttendanceFilter() {
+            const s = document.getElementById('search-hod-attendance');
+            const dt = document.getElementById('filter-date-hod-attendance');
+            if (s) s.value = '';
+            if (dt) dt.value = '';
+            fetchHODAttendanceList(1);
+        }
+
+        function downloadHODAttendancePDFReport() {
+            if (!currentUser || !currentUser.nik) return;
+            const s = document.getElementById('search-hod-attendance');
+            const dt = document.getElementById('filter-date-hod-attendance');
+            const searchKey = s ? s.value.trim() : '';
+            const filterDateMonth = dt ? dt.value.trim() : '';
+
+            showToast('Memproses PDF Laporan Absensi Departemen...', 'info');
+            runBackend('generateHODAttendancePDFReport', [currentUser.nik, searchKey, filterDateMonth], function (res) {
+                if (res && res.success) {
+                    const link = document.createElement('a');
+                    link.href = res.pdfBase64;
+                    link.download = res.fileName || 'Laporan_Absensi_Departemen.pdf';
+                    link.click();
+                    showToast('Laporan PDF Absensi Departemen Berhasil Diunduh!', 'success');
+                } else {
+                    showToast(res ? res.message : 'Gagal mengunduh PDF', 'error');
+                }
             });
         }
 
