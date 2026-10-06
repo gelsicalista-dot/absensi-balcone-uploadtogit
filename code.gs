@@ -719,30 +719,38 @@ function processAbsensi(nik, userLat, userLong, qrSecretCode, actionType) {
     const isoTodayStr = Utilities.formatDate(todayDate, 'Asia/Jakarta', 'yyyy-MM-dd');
     const timeStr = Utilities.formatDate(todayDate, 'Asia/Jakarta', 'HH:mm:ss');
     
+    // Penanganan Shift Malam Lintas Hari (Overnight Shift / Cross-Day)
+    const yesterdayDate = new Date(todayDate.getTime() - 24 * 60 * 60 * 1000);
+    const yesterdayStr = Utilities.formatDate(yesterdayDate, 'Asia/Jakarta', 'dd/MM/yyyy');
+    const isoYesterdayStr = Utilities.formatDate(yesterdayDate, 'Asia/Jakarta', 'yyyy-MM-dd');
+
     const rosterList = getSheetDataAsObjects(CONFIG.SHEET_ROSTER);
     const userRosterToday = rosterList.find(r => r.nik === nik && (r.tanggal === isoTodayStr || r.tanggal === todayStr));
 
     let activeShift = null;
     const shifts = getSheetDataAsObjects(CONFIG.SHEET_SHIFT);
 
-    if (userRosterToday) {
-      const shiftVal = userRosterToday.id_shift || userRosterToday.status_hari;
-      if (['OFF', 'CT', 'PH', 'EO', 'S', 'I'].includes(shiftVal)) {
-        const labelMap = {
-          'OFF': 'OFF (Libur)',
-          'CT': 'Cuti Tahunan (CT)',
-          'PH': 'Publik Holiday (PH)',
-          'EO': 'Extra Off (EO)',
-          'S': 'Sakit (S)',
-          'I': 'Izin (I)'
-        };
-        return { success: false, message: 'Hari ini jadwal Anda adalah ' + (labelMap[shiftVal] || shiftVal) + ' pada Roster Shift.' };
+    // Validasi Roster Jadwal Libur/Cuti HANYA memblokir saat Absen Masuk
+    if (actionType === 'MASUK') {
+      if (userRosterToday) {
+        const shiftVal = userRosterToday.id_shift || userRosterToday.status_hari;
+        if (['OFF', 'CT', 'PH', 'EO', 'S', 'I'].includes(shiftVal)) {
+          const labelMap = {
+            'OFF': 'OFF (Libur)',
+            'CT': 'Cuti Tahunan (CT)',
+            'PH': 'Publik Holiday (PH)',
+            'EO': 'Extra Off (EO)',
+            'S': 'Sakit (S)',
+            'I': 'Izin (I)'
+          };
+          return { success: false, message: 'Hari ini jadwal Anda adalah ' + (labelMap[shiftVal] || shiftVal) + ' pada Roster Shift.' };
+        }
+        activeShift = shifts.find(s => s.id_shift === userRosterToday.id_shift);
       }
-      activeShift = shifts.find(s => s.id_shift === userRosterToday.id_shift);
-    }
 
-    if (!activeShift) {
-      activeShift = shifts[0] || { jam_masuk: '08:00', toleransi_terlambat_menit: '15' };
+      if (!activeShift) {
+        activeShift = shifts[0] || { jam_masuk: '08:00', toleransi_terlambat_menit: '15' };
+      }
     }
 
     const sheetAbsensi = ss.getSheetByName(CONFIG.SHEET_ABSENSI);
@@ -788,20 +796,40 @@ function processAbsensi(nik, userLat, userLong, qrSecretCode, actionType) {
       return { success: true, message: 'Absen Masuk Berhasil! Status: ' + status + ' (' + timeStr + ')' };
 
     } else if (actionType === 'PULANG') {
-      if (existingIndex === -1 || absensiData[existingIndex].jam_masuk === '') {
-        return { success: false, message: 'Anda belum Absen Masuk hari ini!' };
-      }
-      if (absensiData[existingIndex].jam_pulang !== '') {
-        return { success: false, message: 'Anda sudah Absen Pulang hari ini!' };
+      // 1. Cari sesi absensi aktif HARI INI yang belum pulang
+      let targetIndex = absensiData.findIndex(a => a.nik === nik && a.tanggal === todayStr && a.jam_masuk !== '' && a.jam_pulang === '');
+      let isOvernightSession = false;
+
+      // 2. Jika tidak ada sesi aktif hari ini, cari sesi absensi KEMARIN yang belum pulang (Shift Malam Lintas Hari)
+      if (targetIndex === -1) {
+        targetIndex = absensiData.findIndex(a => a.nik === nik && a.tanggal === yesterdayStr && a.jam_masuk !== '' && a.jam_pulang === '');
+        if (targetIndex !== -1) {
+          isOvernightSession = true;
+        }
       }
 
-      const rowNum = existingIndex + 2;
+      // 3. Jika tetap tidak ditemukan sesi aktif yang menggantung
+      if (targetIndex === -1) {
+        const alreadyOutToday = absensiData.some(a => a.nik === nik && a.tanggal === todayStr && a.jam_pulang !== '');
+        if (alreadyOutToday) {
+          return { success: false, message: 'Anda sudah melakukan Absen Pulang hari ini!' };
+        }
+        return { success: false, message: 'Anda belum Absen Masuk untuk sesi shift ini!' };
+      }
+
+      const rowNum = targetIndex + 2;
       sheetAbsensi.getRange(rowNum, 7).setValue(timeStr);
       sheetAbsensi.getRange(rowNum, 8).setNumberFormat('@').setValue(formattedUserLat);
       sheetAbsensi.getRange(rowNum, 9).setNumberFormat('@').setValue(formattedUserLong);
 
       SpreadsheetApp.flush();
-      return { success: true, message: 'Absen Pulang Berhasil! Terima kasih (' + timeStr + ')' };
+
+      const sessionDate = absensiData[targetIndex].tanggal;
+      const successMsg = isOvernightSession
+        ? 'Absen Pulang Berhasil! Sesi Shift Malam (' + sessionDate + ') telah diselesaikan (' + timeStr + '). Terima kasih!'
+        : 'Absen Pulang Berhasil! Terima kasih (' + timeStr + ')';
+
+      return { success: true, message: successMsg };
     }
 
   } catch (err) {
@@ -815,8 +843,21 @@ function getKaryawanDashboard(nik, monthYear) {
     const todayStr = Utilities.formatDate(todayDate, 'Asia/Jakarta', 'dd/MM/yyyy');
     const isoTodayStr = Utilities.formatDate(todayDate, 'Asia/Jakarta', 'yyyy-MM-dd');
     
+    // Penanganan Shift Malam Lintas Hari untuk Dashboard
+    const yesterdayDate = new Date(todayDate.getTime() - 24 * 60 * 60 * 1000);
+    const yesterdayStr = Utilities.formatDate(yesterdayDate, 'Asia/Jakarta', 'dd/MM/yyyy');
+
     const absensi = getSheetDataAsObjects(CONFIG.SHEET_ABSENSI);
-    const todayRecord = absensi.find(a => a.nik === nik && a.tanggal === todayStr) || null;
+    let todayRecord = absensi.find(a => a.nik === nik && a.tanggal === todayStr) || null;
+    
+    // Jika belum ada absensi masuk hari ini, periksa apakah ada sesi Shift Malam kemarin yang belum pulang
+    if (!todayRecord) {
+      const pendingYesterday = absensi.find(a => a.nik === nik && a.tanggal === yesterdayStr && a.jam_masuk !== '' && a.jam_pulang === '');
+      if (pendingYesterday) {
+        todayRecord = Object.assign({}, pendingYesterday);
+        todayRecord.isOvernightActive = true;
+      }
+    }
     
     const personalHistory = absensi
       .filter(a => a.nik === nik)
